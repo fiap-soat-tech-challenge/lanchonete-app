@@ -84,14 +84,14 @@ Este sistema conta com uma aplicação externa que realiza os pagamentos, de for
 ## Exemplos de uso
 
 ### Para acessar o Swagger UI use uma das seguintes URLs
-- http://localhost:8081/api/docs
-- http://localhost:8081/swagger-ui.html
+- http://localhost:3000/api/docs
+- http://localhost:3000/swagger-ui.html
 
 ### Para acessar a documentação da API (JSON)
-    http://localhost:8081/v3/api-docs
+    http://localhost:3000/v3/api-docs
 
 ### Health Check
-    http://localhost:8081/actuator/health
+    http://localhost:3000/actuator/health
 
 <p align="right">(<a href="#readme-top">Voltar para o topo</a>)</p>
 
