@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+
+  database:
+    image: postgres:15
+    container_name: ${DB_HOST}
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./tmp/database:/var/lib/postgresql/data
+    healthcheck: #verificação da saúde do container
+      test: ["CMD-SHELL", "pg_isready -U postgres"] #testa o postgres com o comando esperando uma resposta
+      interval: 5s #intervalo de tempo
+      timeout: 5s #tempo maximo de espera
+      retries: 5 # numero de tentativas
+
+  mock_pagamento:
+    build: ./mock_pagamento
+    image: mock_pagamento
+    container_name: mock_pagamento
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:3000/ping || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+#  app:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    image: lanchonete-app:latest
+#    container_name: lanchonete_app
+#    ports:
+#      - "8081:8081"
+#    environment:
+#      DB_HOST: ${DB_HOST}
+#      DB_NAME: ${DB_NAME}
+#      DB_USER: ${DB_USER}
+#      DB_PASSWORD: ${DB_PASSWORD}
+#    depends_on:
+#      mock_pagamento:
+#        condition: service_healthy
+#      database:
+#        condition: service_healthy #inicia o container do app só quando o postgres disser que está healthy
+#    healthcheck:
+#      test: wget --no-verbose --tries=1 --spider localhost:8081/actuator/health || exit 1
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
+#      start_period: 15s
