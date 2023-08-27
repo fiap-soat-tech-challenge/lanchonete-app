@@ -2,72 +2,107 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+<p align="center">Este é uma projeto é um projeto para uma sistema para uma lanchonete usando as melhores práticas de arquitetura de software.</p>
+  <p align="center">
+    <a href="https://nodejs.org/en" target="_blank"><img src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.JS" /></a>
+    <a href="https://www.typescriptlang.org" target="_blank"><img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white" alt="Typescript" /></a>
+    <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white" alt="NPM Version" /></a>
+    <a href="https://www.postgresql.org" target="_blank"><img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" /></a>
+    <a href="https://www.docker.com" target="_blank"><img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" /></a>
+  </p>
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+<!--
+*** Template baseado em https://github.com/othneildrew/Best-README-Template 
+-->
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+<!-- TITULO DO PROJETO -->
+<br />
+<div align="center">
+  <h3 align="center">Lanchonete</h3>
+</div>
 
-## Installation
 
-```bash
-$ npm install
-```
 
-## Running the app
+<!-- TABELA DE CONTEUDOS -->
+<details>
+  <summary>Tabela de conteúdos</summary>
+  <ol>
+    <li>
+      <a href="#começando">Começando</a>
+      <ul>
+        <li><a href="#pré-requisitos">Pré-requisitos</a></li>
+        <li><a href="#instalação">Instalação</a></li>
+      </ul>
+    </li>
+    <li><a href="#exemplos-de-uso">Exemplos de uso</a></li>
+    <li><a href="#roteiro">Roteiro</a></li>
+  </ol>
+</details>
 
-```bash
-# development
-$ npm run start
 
-# watch mode
-$ npm run start:dev
+<!-- COMECANDO -->
+## Começando
 
-# production mode
-$ npm run start:prod
-```
+Para executar o projeto localmente siga as próximas etapas.
 
-## Test
+### Pré-requisitos
 
-```bash
-# unit tests
-$ npm run test
+* Docker com compose
+  Veja a [documentação](https://docs.docker.com/engine/install/) para instalar o docker no seu sistema se ainda não tiver instalado.
+* NodeJS no mínimo na versão 16. Recomendado a versão 18 (LTS) disponível no [site oficial](https://nodejs.org/en).
 
-# e2e tests
-$ npm run test:e2e
+### Instalação
 
-# test coverage
-$ npm run test:cov
-```
+A instalação é bem simples, siga as seguintes etapas:
 
-## Support
+1. Clone o repositório
+   ```sh
+   git clone https://github.com/ValSousa/lanchonete.git
+   ```
+2. Entre na pasta do projeto
+   ```sh
+   cd lanchonete
+   ```
+3. Crie um arquivo novo arquivo com as váriaveis de ambiente `.env` usando o `.env.example`
+   ```sh
+   cp .env.example .env
+   ```
+4. Agora execute o projeto usando o docker compose
+   ```sh
+   docker compose up
+   ```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+<p align="right">(<a href="#readme-top">Voltar para o topo</a>)</p>
 
-## Stay in touch
+<!-- Aplicação de pagamento (mock) -->
+## Aplicação de pagamento (mock)
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Este sistema conta com uma aplicação externa que realiza os pagamentos, de forma mockada, visando apenas dar suporte ao fluxo da aplicação principal.
 
-## License
+<!-- EXEMPLOS DE USO -->
+## Exemplos de uso
 
-Nest is [MIT licensed](LICENSE).
+### Para acessar o Swagger UI use uma das seguintes URLs
+- http://localhost:8081/api/docs
+- http://localhost:8081/swagger-ui.html
+
+### Para acessar a documentação da API (JSON)
+    http://localhost:8081/v3/api-docs
+
+### Health Check
+    http://localhost:8081/actuator/health
+
+<p align="right">(<a href="#readme-top">Voltar para o topo</a>)</p>
+
+
+
+<!-- ROTEIRO -->
+## Roteiro
+
+- [x] Começando o projeto
+- [x] Dockerização
+- [x] Documentação
+
+<p align="right">(<a href="#readme-top">Voltar para o topo</a>)</p>
+
