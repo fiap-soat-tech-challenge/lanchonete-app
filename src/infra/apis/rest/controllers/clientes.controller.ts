@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -6,9 +6,10 @@ import {
   ApiOkResponse,
   ApiOperation,
   ApiResponse,
-  ApiTags
+  ApiTags,
 } from '@nestjs/swagger';
-import { ClienteResponseDto } from '../response/cliente.response.dto';
+import { ClientePresenter } from '../presenters/cliente.presenter';
+import { ClienteDto } from '../dtos/cliente.dto';
 
 @ApiTags('Clientes')
 @ApiResponse({ status: '5XX', description: 'Erro interno do sistema' })
@@ -20,10 +21,10 @@ export class ClientesController {
   })
   @ApiOkResponse({
     isArray: true,
-    type: ClienteResponseDto,
+    type: ClientePresenter,
   })
   @Get()
-  listar(): Array<ClienteResponseDto> {
+  listar(): Array<ClientePresenter> {
     // TODO: implementar com repositories
     return [];
   }
@@ -34,14 +35,14 @@ export class ClientesController {
       'Realiza o cadastro de um novo cliente com os dados fornecidos e retorna o cliente cadastrado',
   })
   @ApiCreatedResponse({
-    type: ClienteResponseDto,
+    type: ClientePresenter,
   })
   @ApiBadRequestResponse({
     description: 'Dados inválidos ou incorretos',
   })
   @Post()
-  cadastrar(): ClienteResponseDto {
-    // TODO: implementar com repositories
+  cadastrar(@Body() clienteDto: ClienteDto): ClientePresenter {
+    console.log(clienteDto);
     return null;
   }
 
@@ -50,7 +51,7 @@ export class ClientesController {
     description: 'Retorna um cliente pelo CPF, se for encontrado',
   })
   @ApiCreatedResponse({
-    type: ClienteResponseDto,
+    type: ClientePresenter,
   })
   @ApiNotFoundResponse({
     description: 'O CPF do cliente fornecido não foi encontrado',

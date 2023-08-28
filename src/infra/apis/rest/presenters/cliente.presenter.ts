@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Cliente } from '../../../../domain/model/cliente';
 
-export class ClienteResponseDto {
+export class ClientePresenter {
   @ApiProperty()
   readonly id: number;
 

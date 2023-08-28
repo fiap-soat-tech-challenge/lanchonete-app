@@ -7,8 +7,8 @@ import {
   ApiResponse,
   ApiTags
 } from '@nestjs/swagger';
-import { CategoriaResponseDto } from '../response/categoria.response.dto';
-import { ProdutoResponseDto } from '../response/produto.response.dto';
+import { CategoriaPresenter } from '../presenters/categoria.presenter';
+import { ProdutoPresenter } from '../presenters/produto.presenter';
 
 @ApiTags('Produtos')
 @ApiResponse({ status: '5XX', description: 'Erro interno do sistema' })
@@ -21,10 +21,10 @@ export class ProdutosController {
   })
   @ApiOkResponse({
     isArray: true,
-    type: ProdutoResponseDto,
+    type: ProdutoPresenter,
   })
   @Get()
-  listar(): Array<CategoriaResponseDto> {
+  listar(): Array<CategoriaPresenter> {
     // TODO: implementar com repositories
     return [];
   }
@@ -35,7 +35,7 @@ export class ProdutosController {
   })
   @ApiOkResponse({
     isArray: true,
-    type: ProdutoResponseDto,
+    type: ProdutoPresenter,
   })
   @ApiNotFoundResponse({
     description: 'A categoria fornecida não foi encontrada',
@@ -43,7 +43,7 @@ export class ProdutosController {
   @Get(':categoria')
   buscarPorCategoria(
     @Param('categoria') categoria: string,
-  ): Array<ProdutoResponseDto> {
+  ): Array<ProdutoPresenter> {
     // TODO: implementar com repositories
     console.log(categoria);
     return [];
@@ -55,13 +55,13 @@ export class ProdutosController {
       'Faz o cadastro de uma novo produto e retorna o produto em caso de sucesso',
   })
   @ApiOkResponse({
-    type: ProdutoResponseDto,
+    type: ProdutoPresenter,
   })
   @ApiBadRequestResponse({
     description: 'Dados inválidos ou incorretos',
   })
   @Post()
-  incluir(): ProdutoResponseDto {
+  incluir(): ProdutoPresenter {
     // TODO: implementar com repositories
     return null;
   }
@@ -71,13 +71,13 @@ export class ProdutosController {
     description: 'Altera um produto já cadastrado no sistema',
   })
   @ApiOkResponse({
-    type: ProdutoResponseDto,
+    type: ProdutoPresenter,
   })
   @ApiBadRequestResponse({
     description: 'Dados inválidos ou incorretos',
   })
   @Put()
-  alterar(): ProdutoResponseDto {
+  alterar(): ProdutoPresenter {
     // TODO: implementar com repositories
     return null;
   }

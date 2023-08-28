@@ -2,9 +2,9 @@ import { ItemPedido } from '../../../../domain/model/item-pedido';
 import { Situacao } from '../../../../domain/model/situacao';
 import { ApiProperty } from '@nestjs/swagger';
 import { Pedido } from '../../../../domain/model/pedido';
-import { PedidoClienteResponseDto } from './pedido-cliente.response.dto';
+import { PedidoClientePresenter } from './pedido-cliente.presenter';
 
-export class PedidoResponseDto {
+export class PedidoPresenter {
   @ApiProperty()
   readonly id: number;
 
@@ -12,7 +12,7 @@ export class PedidoResponseDto {
   readonly codigoPedido: number;
 
   @ApiProperty()
-  readonly cliente: PedidoClienteResponseDto;
+  readonly cliente: PedidoClientePresenter;
 
   @ApiProperty()
   readonly itensPedido: Array<ItemPedido>;
@@ -29,7 +29,7 @@ export class PedidoResponseDto {
   public constructor(pedido: Pedido) {
     this.id = pedido.id;
     this.codigoPedido = pedido.codigoPedido;
-    this.cliente = new PedidoClienteResponseDto(pedido.cliente);
+    this.cliente = new PedidoClientePresenter(pedido.cliente);
     this.itensPedido = pedido.itensPedido;
     this.precoTotal = pedido.precoTotal;
     this.situacao = pedido.situacao;

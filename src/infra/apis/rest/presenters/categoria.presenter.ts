@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CategoriaResponseDto {
+export class CategoriaPresenter {
   @ApiProperty()
   readonly nome: string;
 

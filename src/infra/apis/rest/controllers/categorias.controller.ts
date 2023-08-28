@@ -5,7 +5,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { CategoriaResponseDto } from '../response/categoria.response.dto';
+import { CategoriaPresenter } from '../presenters/categoria.presenter';
 import { Categoria } from '../../../../domain/model/categoria';
 
 @ApiTags('Categorias')
@@ -19,12 +19,12 @@ export class CategoriasController {
   @ApiOkResponse({
     status: '2XX',
     isArray: true,
-    type: CategoriaResponseDto,
+    type: CategoriaPresenter,
   })
   @Get()
-  listar(): Array<CategoriaResponseDto> {
+  listar(): Array<CategoriaPresenter> {
     return Object.keys(Categoria).map(
-      (categoria) => new CategoriaResponseDto(categoria),
+      (categoria) => new CategoriaPresenter(categoria),
     );
   }
 }

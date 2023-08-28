@@ -2,7 +2,7 @@ import { Categoria } from '../../../../domain/model/categoria';
 import { ApiProperty } from '@nestjs/swagger';
 import { Produto } from '../../../../domain/model/produto';
 
-export class ProdutoResponseDto {
+export class ProdutoPresenter {
   @ApiProperty()
   readonly id: number | null;
 
