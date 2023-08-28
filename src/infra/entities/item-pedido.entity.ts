@@ -1,11 +1,21 @@
 import { Produto } from '../../domain/model/produto';
-import { Column, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { PedidoEntity } from './pedido.entity';
+import { ProdutoEntity } from './produto.entity';
 
+@Entity({ name: 'item_pedidos' })
 export class ItemPedidoEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => Produto)
+  @OneToOne(() => ProdutoEntity)
   @JoinColumn()
   produto: Produto;
 
@@ -14,4 +24,7 @@ export class ItemPedidoEntity {
 
   @Column()
   preco: number;
+
+  @ManyToOne(() => PedidoEntity, (pedido) => pedido.itensPedido)
+  pedido: PedidoEntity;
 }

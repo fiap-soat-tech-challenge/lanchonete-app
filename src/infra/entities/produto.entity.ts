@@ -1,6 +1,7 @@
 import { Categoria } from '../../domain/model/categoria';
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity({ name: 'produtos' })
 export class ProdutoEntity {
   @PrimaryGeneratedColumn()
   id: number;

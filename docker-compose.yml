@@ -41,11 +41,8 @@ services:
 #    container_name: lanchonete_app
 #    ports:
 #      - "8081:8081"
-#    environment:
-#      DB_HOST: ${DB_HOST}
-#      DB_NAME: ${DB_NAME}
-#      DB_USER: ${DB_USER}
-#      DB_PASSWORD: ${DB_PASSWORD}
+#    env_file:
+#      - .env.docker
 #    depends_on:
 #      mock_pagamento:
 #        condition: service_healthy

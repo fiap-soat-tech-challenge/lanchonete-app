@@ -1,8 +1,15 @@
-import { Cliente } from '../../domain/model/cliente';
-import { ItemPedido } from '../../domain/model/item-pedido';
 import { Situacao } from '../../domain/model/situacao';
-import { Column, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { ItemPedidoEntity } from './item-pedido.entity';
+import { ClienteEntity } from './cliente.entity';
 
+@Entity({ name: 'pedidos' })
 export class PedidoEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -10,11 +17,11 @@ export class PedidoEntity {
   @Column()
   codigoPedido: number;
 
-  @ManyToOne(() => Cliente)
-  cliente: Cliente;
+  @ManyToOne(() => ClienteEntity)
+  cliente: ClienteEntity;
 
-  @OneToMany(() => ItemPedido, () => {})
-  itensPedido: Array<ItemPedido>;
+  @OneToMany(() => ItemPedidoEntity, (item) => item.pedido)
+  itensPedido: Array<ItemPedidoEntity>;
 
   @Column()
   precoTotal: number;
