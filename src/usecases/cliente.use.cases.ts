@@ -8,8 +8,8 @@ export class ClienteUseCases {
     return await this.clienteRepository.findAll();
   }
 
-  async getClienteByCpf(): Promise<Cliente> {
-    return null;
+  async getClienteByCpf(cpf: string): Promise<Cliente> {
+    return await this.clienteRepository.findByCpf(cpf);
   }
 
   async addCliente(cliente: Cliente): Promise<void> {

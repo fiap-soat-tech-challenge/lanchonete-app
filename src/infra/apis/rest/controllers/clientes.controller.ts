@@ -6,7 +6,7 @@ import {
   ApiOkResponse,
   ApiOperation,
   ApiResponse,
-  ApiTags
+  ApiTags,
 } from '@nestjs/swagger';
 import { ClientePresenter } from '../presenters/cliente.presenter';
 import { ClienteDto } from '../dtos/cliente.dto';
@@ -65,9 +65,9 @@ export class ClientesController {
     description: 'O CPF do cliente fornecido não foi encontrado',
   })
   @Get(':cpf')
-  buscarPorCpf(@Param('cpf') cpf: string) {
-    console.log(cpf);
-    // TODO: implementar com repositories
-    return null;
+  async buscarPorCpf(@Param('cpf') cpf: string) {
+    return await this.clienteUseCasesUseCaseProxy
+      .getInstance()
+      .getClienteByCpf(cpf);
   }
 }

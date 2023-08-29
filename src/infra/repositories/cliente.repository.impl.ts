@@ -3,6 +3,7 @@ import { Cliente } from '../../domain/model/cliente';
 import { ClienteEntity } from '../entities/cliente.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Equal, Repository } from 'typeorm';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 export class ClienteRepositoryImpl implements ClienteRepository {
   constructor(
@@ -19,7 +20,10 @@ export class ClienteRepositoryImpl implements ClienteRepository {
     const clienteEntity = await this.clienteEntityRepository.findOneBy({
       cpf: Equal(cpf),
     });
-    return this.toCliente(clienteEntity);
+    if (clienteEntity) {
+      return this.toCliente(clienteEntity);
+    }
+    throw new HttpException('NotFound', HttpStatus.NOT_FOUND);
   }
 
   async insert(cliente: Cliente): Promise<void> {
