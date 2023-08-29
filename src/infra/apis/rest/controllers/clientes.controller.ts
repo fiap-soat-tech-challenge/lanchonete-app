@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -6,15 +6,22 @@ import {
   ApiOkResponse,
   ApiOperation,
   ApiResponse,
-  ApiTags,
+  ApiTags
 } from '@nestjs/swagger';
 import { ClientePresenter } from '../presenters/cliente.presenter';
 import { ClienteDto } from '../dtos/cliente.dto';
+import { UseCasesProxyModule } from '../../../usecases-proxy/use-cases-proxy.module';
+import { UseCaseProxy } from '../../../usecases-proxy/use-case-proxy';
+import { ClienteUseCases } from '../../../../usecases/cliente.use.cases';
 
 @ApiTags('Clientes')
 @ApiResponse({ status: '5XX', description: 'Erro interno do sistema' })
 @Controller('/api/clientes')
 export class ClientesController {
+  constructor(
+    @Inject(UseCasesProxyModule.CLIENTE_USECASES_PROXY)
+    private clienteUseCasesUseCaseProxy: UseCaseProxy<ClienteUseCases>,
+  ) {}
   @ApiOperation({
     summary: 'Listagem de clientes cadastrados',
     description: 'Retorna a lista de clientes cadastrados no sistema',
@@ -24,9 +31,10 @@ export class ClientesController {
     type: ClientePresenter,
   })
   @Get()
-  listar(): Array<ClientePresenter> {
-    // TODO: implementar com repositories
-    return [];
+  async listar(): Promise<Array<ClientePresenter>> {
+    return await this.clienteUseCasesUseCaseProxy
+      .getInstance()
+      .getAllClientes();
   }
 
   @ApiOperation({

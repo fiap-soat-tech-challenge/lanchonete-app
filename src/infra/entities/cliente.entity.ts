@@ -19,4 +19,16 @@ export class ClienteEntity {
 
   @Column()
   dataHoraCadastro: Date;
+
+  public constructor(
+    cpf: string,
+    nome: string,
+    email: string,
+    telefone: string,
+  ) {
+    this.cpf = cpf;
+    this.nome = nome;
+    this.email = email;
+    this.telefone = telefone;
+  }
 }
