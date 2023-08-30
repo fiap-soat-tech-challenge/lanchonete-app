@@ -6,6 +6,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { Cliente } from '../../../../domain/model/cliente';
 
 export class ClienteDto {
   @ApiProperty()
@@ -32,4 +33,8 @@ export class ClienteDto {
     message: 'Formato de telefone inválido. Use o formato (99) 99999-9999',
   })
   readonly telefone: string;
+
+  public toCliente(): Cliente {
+    return new Cliente(this.cpf, this.nome, this.email, this.telefone);
+  }
 }

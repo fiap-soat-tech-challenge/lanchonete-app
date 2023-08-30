@@ -32,9 +32,12 @@ export class ClientesController {
   })
   @Get()
   async listar(): Promise<Array<ClientePresenter>> {
-    return await this.clienteUseCasesUseCaseProxy
+    // TODO: arrumar timezone
+    const allClientes = await this.clienteUseCasesUseCaseProxy
       .getInstance()
       .getAllClientes();
+    const clientePresenters = allClientes.map((cliente) => new ClientePresenter(cliente));
+    return clientePresenters;
   }
 
   @ApiOperation({
@@ -49,9 +52,11 @@ export class ClientesController {
     description: 'Dados inválidos ou incorretos',
   })
   @Post()
-  cadastrar(@Body() clienteDto: ClienteDto): ClientePresenter {
-    console.log(clienteDto);
-    return null;
+  async cadastrar(@Body() clienteDto: ClienteDto): Promise<ClientePresenter> {
+    const cliente = await this.clienteUseCasesUseCaseProxy
+      .getInstance()
+      .addCliente(clienteDto.toCliente());
+    return new ClientePresenter(cliente);
   }
 
   @ApiOperation({

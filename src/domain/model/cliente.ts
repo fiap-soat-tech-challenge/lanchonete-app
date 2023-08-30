@@ -11,7 +11,6 @@ export class Cliente {
     nome: string,
     email: string,
     telefone: string,
-    dataHoraCadastro: Date,
   );
 
   public constructor(
@@ -24,12 +23,11 @@ export class Cliente {
   );
 
   public constructor(...params: any[]) {
-    if (params.length === 5) {
+    if (params.length === 4) {
       this._cpf = params[0];
       this._nome = params[1];
       this._email = params[2];
       this._telefone = params[3];
-      this._dataHoraCadastro = params[4];
       return;
     }
     this._id = params[0];

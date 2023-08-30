@@ -1,6 +1,7 @@
 import { Situacao } from '../../domain/model/situacao';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   ManyToOne,
   OneToMany,
@@ -29,6 +30,6 @@ export class PedidoEntity {
   @Column()
   situacao: Situacao;
 
-  @Column()
+  @CreateDateColumn()
   dataHoraCadastro: Date;
 }

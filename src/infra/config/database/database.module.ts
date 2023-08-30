@@ -8,6 +8,7 @@ export const getTypeOrmModuleOptions = (
 ): TypeOrmModuleOptions =>
   ({
     type: 'postgres',
+    useUTC: false,
     host: envie.getDatabaseHost(),
     port: envie.getDatabasePort(),
     username: envie.getDatabaseUser(),
@@ -19,7 +20,7 @@ export const getTypeOrmModuleOptions = (
     migrationsRun: false,
     migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
     cli: {
-      migrationsDir: 'src/migrations',
+      migrationsDir: 'src/data/migrations',
     },
     // ssl: {
     //   rejectUnauthorized: false,

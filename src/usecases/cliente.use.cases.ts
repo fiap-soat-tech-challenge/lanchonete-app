@@ -12,7 +12,7 @@ export class ClienteUseCases {
     return await this.clienteRepository.findByCpf(cpf);
   }
 
-  async addCliente(cliente: Cliente): Promise<void> {
-    await this.clienteRepository.insert(cliente);
+  async addCliente(cliente: Cliente): Promise<Cliente> {
+    return await this.clienteRepository.insert(cliente);
   }
 }

@@ -1,4 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({ name: 'clientes' })
 export class ClienteEntity {
@@ -17,7 +22,7 @@ export class ClienteEntity {
   @Column()
   telefone: string;
 
-  @Column()
+  @CreateDateColumn()
   dataHoraCadastro: Date;
 
   public constructor(

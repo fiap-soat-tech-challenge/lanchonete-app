@@ -2,7 +2,7 @@ import { ClienteRepository } from '../../domain/repositories/cliente.repository'
 import { Cliente } from '../../domain/model/cliente';
 import { ClienteEntity } from '../entities/cliente.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Equal, Repository } from 'typeorm';
+import { Equal, InsertResult, Repository } from 'typeorm';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 export class ClienteRepositoryImpl implements ClienteRepository {
@@ -26,9 +26,11 @@ export class ClienteRepositoryImpl implements ClienteRepository {
     throw new HttpException('NotFound', HttpStatus.NOT_FOUND);
   }
 
-  async insert(cliente: Cliente): Promise<void> {
-    const clienteEntity = this.toClienteEntity(cliente);
-    await this.clienteEntityRepository.insert(clienteEntity);
+  async insert(cliente: Cliente): Promise<Cliente> {
+    const entityToInsert = this.toClienteEntity(cliente);
+    const clienteEntity =
+      await this.clienteEntityRepository.save(entityToInsert);
+    return this.toCliente(clienteEntity);
   }
 
   private toCliente(clienteEntity: ClienteEntity): Cliente {

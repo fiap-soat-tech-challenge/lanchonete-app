@@ -1,5 +1,10 @@
 import { Categoria } from '../../domain/model/categoria';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({ name: 'produtos' })
 export class ProdutoEntity {
@@ -15,7 +20,7 @@ export class ProdutoEntity {
   @Column()
   preco: number;
 
-  @Column()
+  @CreateDateColumn()
   dataCadastro: Date;
 
   @Column({

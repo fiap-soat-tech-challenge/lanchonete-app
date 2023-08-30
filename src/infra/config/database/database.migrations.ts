@@ -13,7 +13,7 @@ const dataSource: DataSource = new DataSource({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   entities: [__dirname + './../../entities/**/*.entity{.ts,.js}'],
-  migrations: [__dirname + './../../../../data/migrations/*{.js,.ts}'],
+  migrations: [__dirname + './../../data/migrations/**/*{.ts,.js}'],
   schema: process.env.DB_SCHEMA,
   migrationsRun: true,
 });

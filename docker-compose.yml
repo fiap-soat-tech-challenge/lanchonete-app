@@ -4,9 +4,10 @@ services:
 
   database:
     image: postgres:15
-    container_name: ${DB_HOST}
+    container_name: lanchonete_database
     restart: always
     environment:
+      TZ: 'America/Sao_Paulo'
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -23,7 +24,7 @@ services:
   mock_pagamento:
     build: ./mock_pagamento
     image: mock_pagamento
-    container_name: mock_pagamento
+    container_name: lanchonete_pagamento
     ports:
       - "3001:3000"
     healthcheck:
