@@ -1,19 +1,29 @@
-import { Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post, Put, } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiResponse,
-  ApiTags
+  ApiTags,
 } from '@nestjs/swagger';
 import { CategoriaPresenter } from '../presenters/categoria.presenter';
 import { ProdutoPresenter } from '../presenters/produto.presenter';
+import { UseCasesProxyModule } from '../../../usecases-proxy/use-cases-proxy.module';
+import { UseCaseProxy } from '../../../usecases-proxy/use-case-proxy';
+import { ProdutosUseCases } from '../../../../usecases/produtos.use.cases';
+import { ProdutoDto } from '../dtos/produto.dto';
+import { Categoria } from '../../../../domain/model/categoria';
 
 @ApiTags('Produtos')
 @ApiResponse({ status: '5XX', description: 'Erro interno do sistema' })
 @Controller('/api/produtos')
 export class ProdutosController {
+  constructor(
+    @Inject(UseCasesProxyModule.PRODUTO_USECASES_PROXY)
+    private produtosUseCasesUseCaseProxy: UseCaseProxy<ProdutosUseCases>,
+  ) {}
+
   @ApiOperation({
     summary: 'Lista todos os produtos',
     description:
@@ -24,9 +34,11 @@ export class ProdutosController {
     type: ProdutoPresenter,
   })
   @Get()
-  listar(): Array<CategoriaPresenter> {
-    // TODO: implementar com repositories
-    return [];
+  async listar(): Promise<Array<CategoriaPresenter>> {
+    const allProdutos = await this.produtosUseCasesUseCaseProxy
+      .getInstance()
+      .getAllProdutos();
+    return allProdutos.map((produto) => new ProdutoPresenter(produto));
   }
 
   @ApiOperation({
@@ -41,12 +53,13 @@ export class ProdutosController {
     description: 'A categoria fornecida não foi encontrada',
   })
   @Get(':categoria')
-  buscarPorCategoria(
-    @Param('categoria') categoria: string,
-  ): Array<ProdutoPresenter> {
-    // TODO: implementar com repositories
-    console.log(categoria);
-    return [];
+  async buscarPorCategoria(
+    @Param('categoria') categoria: Categoria,
+  ): Promise<Array<ProdutoPresenter>> {
+    const produtosByCategoria = await this.produtosUseCasesUseCaseProxy
+      .getInstance()
+      .getProdutosByCategoria(categoria);
+    return produtosByCategoria.map((produto) => new ProdutoPresenter(produto));
   }
 
   @ApiOperation({
@@ -61,9 +74,11 @@ export class ProdutosController {
     description: 'Dados inválidos ou incorretos',
   })
   @Post()
-  incluir(): ProdutoPresenter {
-    // TODO: implementar com repositories
-    return null;
+  async incluir(@Body() produtoDto: ProdutoDto): Promise<ProdutoPresenter> {
+    const produto = await this.produtosUseCasesUseCaseProxy
+      .getInstance()
+      .addProduto(produtoDto.toProduto());
+    return new ProdutoPresenter(produto);
   }
 
   @ApiOperation({
@@ -76,10 +91,14 @@ export class ProdutosController {
   @ApiBadRequestResponse({
     description: 'Dados inválidos ou incorretos',
   })
-  @Put()
-  alterar(): ProdutoPresenter {
-    // TODO: implementar com repositories
-    return null;
+  @Put(':produtoId')
+  async alterar(
+    @Param('produtoId') produtoId: number,
+    @Body() produtoDto: ProdutoDto,
+  ): Promise<void> {
+    await this.produtosUseCasesUseCaseProxy
+      .getInstance()
+      .updateProduto(produtoId, produtoDto.toProduto());
   }
 
   @ApiOperation({
@@ -90,8 +109,10 @@ export class ProdutosController {
   @ApiNotFoundResponse({
     description: 'O Id do produto fornecido não foi encontrado',
   })
-  @Delete()
-  excluir(): void {
-    // TODO: implementar com repositories
+  @Delete(':produtoId')
+  async excluir(@Param('produtoId') produtoId: number): Promise<void> {
+    await this.produtosUseCasesUseCaseProxy
+      .getInstance()
+      .deleteProduto(produtoId);
   }
 }

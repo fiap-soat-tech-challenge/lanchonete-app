@@ -32,12 +32,10 @@ export class ClientesController {
   })
   @Get()
   async listar(): Promise<Array<ClientePresenter>> {
-    // TODO: arrumar timezone
     const allClientes = await this.clienteUseCasesUseCaseProxy
       .getInstance()
       .getAllClientes();
-    const clientePresenters = allClientes.map((cliente) => new ClientePresenter(cliente));
-    return clientePresenters;
+    return allClientes.map((cliente) => new ClientePresenter(cliente));
   }
 
   @ApiOperation({
@@ -53,6 +51,7 @@ export class ClientesController {
   })
   @Post()
   async cadastrar(@Body() clienteDto: ClienteDto): Promise<ClientePresenter> {
+    // TODO: Arrumar validacao de campos unicos (CPF e email)
     const cliente = await this.clienteUseCasesUseCaseProxy
       .getInstance()
       .addCliente(clienteDto.toCliente());
@@ -70,9 +69,10 @@ export class ClientesController {
     description: 'O CPF do cliente fornecido não foi encontrado',
   })
   @Get(':cpf')
-  async buscarPorCpf(@Param('cpf') cpf: string) {
-    return await this.clienteUseCasesUseCaseProxy
+  async buscarPorCpf(@Param('cpf') cpf: string): Promise<ClientePresenter> {
+    const clienteByCpf = await this.clienteUseCasesUseCaseProxy
       .getInstance()
       .getClienteByCpf(cpf);
+    return new ClientePresenter(clienteByCpf);
   }
 }

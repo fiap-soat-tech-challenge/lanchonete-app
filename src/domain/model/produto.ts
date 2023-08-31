@@ -2,17 +2,16 @@ import { Categoria } from './categoria';
 
 export class Produto {
   private readonly _id: number | null;
-  private readonly _nome: string;
-  private readonly _descricao: string;
-  private readonly _preco: number;
+  private _nome: string;
+  private _descricao: string;
+  private _preco: number;
   private readonly _dataCadastro: Date;
-  private readonly _categoria: Categoria;
+  private _categoria: Categoria;
 
   public constructor(
     nome: string,
     descricao: string,
     preco: number,
-    dataCadastro: Date,
     categoria: Categoria,
   );
 
@@ -64,5 +63,21 @@ export class Produto {
 
   get categoria(): Categoria {
     return this._categoria;
+  }
+
+  set nome(nome: string) {
+    this._nome = nome;
+  }
+
+  set descricao(descricao: string) {
+    this._descricao = descricao;
+  }
+
+  set preco(preco: number) {
+    this._preco = preco;
+  }
+
+  set categoria(categoria: Categoria) {
+    this._categoria = categoria;
   }
 }

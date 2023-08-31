@@ -28,4 +28,16 @@ export class ProdutoEntity {
     enum: Categoria,
   })
   categoria: Categoria;
+
+  constructor(
+    nome: string,
+    descricao: string,
+    preco: number,
+    categoria: Categoria,
+  ) {
+    this.nome = nome;
+    this.descricao = descricao;
+    this.preco = preco;
+    this.categoria = categoria;
+  }
 }
