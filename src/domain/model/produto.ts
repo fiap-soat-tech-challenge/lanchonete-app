@@ -25,12 +25,11 @@ export class Produto {
   );
 
   public constructor(...params: any[]) {
-    if (params.length === 6) {
+    if (params.length === 4) {
       this._nome = params[0];
       this._descricao = params[1];
       this._preco = params[2];
-      this._dataCadastro = params[3];
-      this._categoria = params[4];
+      this._categoria = params[3];
       return;
     }
     this._id = params[0];

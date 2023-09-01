@@ -4,7 +4,7 @@ import {
   IsCurrency,
   IsEnum,
   IsNotEmpty,
-  MaxLength,
+  MaxLength, Min,
   MinLength,
 } from 'class-validator';
 import { Produto } from '../../../../domain/model/produto';
@@ -23,27 +23,8 @@ export class ProdutoDto {
   readonly descricao: string;
 
   @ApiProperty()
-  @IsCurrency(
-    {
-      symbol: 'R$',
-      require_symbol: true,
-      allow_space_after_symbol: true,
-      symbol_after_digits: false,
-      allow_negatives: false,
-      parens_for_negatives: false,
-      negative_sign_before_digits: false,
-      negative_sign_after_digits: false,
-      allow_negative_sign_placeholder: false,
-      thousands_separator: '.',
-      decimal_separator: ',',
-      allow_decimal: true,
-      require_decimal: true,
-      digits_after_decimal: [2],
-      allow_space_after_digits: false,
-    },
-    { message: 'Preço informado é inválido' },
-  )
-  readonly preco: string;
+  @Min(0, { message: 'Preço informado é inválido' })
+  readonly preco: number;
 
   @ApiProperty()
   @IsEnum(Categoria, { message: 'A categoria não é válida' })
@@ -53,7 +34,7 @@ export class ProdutoDto {
     return new Produto(
       this.nome,
       this.descricao,
-      parseFloat(this.preco),
+      this.preco * 100,
       this.categoria,
     );
   }

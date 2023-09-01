@@ -55,7 +55,7 @@ export class ProdutoRepositoryImpl implements ProdutoRepository {
       produtoEntity.id,
       produtoEntity.nome,
       produtoEntity.descricao,
-      produtoEntity.preco,
+      produtoEntity.preco / 100,
       produtoEntity.dataCadastro,
       produtoEntity.categoria,
     );

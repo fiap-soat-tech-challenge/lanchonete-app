@@ -26,6 +26,7 @@ export class ProdutoEntity {
   @Column({
     type: 'enum',
     enum: Categoria,
+    default: Categoria.ACOMPANHAMENTO,
   })
   categoria: Categoria;
 
