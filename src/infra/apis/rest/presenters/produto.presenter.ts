@@ -16,7 +16,7 @@ export class ProdutoPresenter {
   readonly preco: number;
 
   @ApiProperty()
-  readonly dataCadastro: string;
+  readonly dataCadastro: Date;
 
   @ApiProperty()
   readonly categoria: Categoria;
@@ -26,7 +26,7 @@ export class ProdutoPresenter {
     this.nome = produto.nome;
     this.descricao = produto.descricao;
     this.preco = produto.preco;
-    this.dataCadastro = produto.dataCadastro.toString();
+    this.dataCadastro = produto.dataCadastro;
     this.categoria = produto.categoria;
   }
 }
