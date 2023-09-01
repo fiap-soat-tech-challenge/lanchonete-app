@@ -13,6 +13,10 @@ export class ProdutosUseCases {
     return await this.produtoRepository.findByCategoria(categoria);
   }
 
+  async getProdutoById(id: number): Promise<Produto> {
+    return await this.produtoRepository.findById(id);
+  }
+
   async addProduto(produto: Produto): Promise<Produto> {
     return await this.produtoRepository.insert(produto);
   }

@@ -1,13 +1,37 @@
-import { Controller, Get, Post } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Inject, NotFoundException, Post } from '@nestjs/common';
+import {
+  ApiBadRequestResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { PedidoPresenter } from '../presenters/pedido.presenter';
-import { ProdutoPresenter } from '../presenters/produto.presenter';
-import { Categoria } from '../../../../domain/model/categoria';
+import { PedidoDto } from '../dtos/pedido.dto';
+import { UseCaseProxy } from '../../../usecases-proxy/use-case-proxy';
+import { PedidoUseCases } from '../../../../usecases/pedido.use.cases';
+import { UseCasesProxyModule } from '../../../usecases-proxy/use-cases-proxy.module';
+import { ItemPedidoUseCases } from '../../../../usecases/item-pedido.use.cases';
+import { ProdutosUseCases } from '../../../../usecases/produtos.use.cases';
+import { Produto } from '../../../../domain/model/produto';
+import { ItemPedido } from '../../../../domain/model/item-pedido';
+import { Pedido } from '../../../../domain/model/pedido';
+import { Cliente } from '../../../../domain/model/cliente';
+import { ClienteUseCases } from '../../../../usecases/cliente.use.cases';
 
 @ApiTags('Pedidos')
 @ApiResponse({ status: '5XX', description: 'Erro interno do sistema' })
 @Controller('/api/pedidos')
 export class PedidosController {
+  constructor(
+    @Inject(UseCasesProxyModule.PEDIDO_USECASES_PROXY)
+    private pedidoUseCasesUseCaseProxy: UseCaseProxy<PedidoUseCases>,
+    @Inject(UseCasesProxyModule.PRODUTO_USECASES_PROXY)
+    private produtosUseCasesUseCaseProxy: UseCaseProxy<ProdutosUseCases>,
+    @Inject(UseCasesProxyModule.CLIENTE_USECASES_PROXY)
+    private clienteUseCasesUseCaseProxy: UseCaseProxy<ClienteUseCases>,
+  ) {}
+
   @ApiOperation({
     summary: 'Listagem de pedidos cadastrados',
     description: 'Retorna a lista de pedidos cadastrados no sistema',
@@ -17,9 +41,11 @@ export class PedidosController {
     type: PedidoPresenter,
   })
   @Get()
-  listar(): Array<PedidoPresenter> {
-    // TODO: implementar com repositories
-    return [];
+  async listar(): Promise<Array<PedidoPresenter>> {
+    const allPedidos = await this.pedidoUseCasesUseCaseProxy
+      .getInstance()
+      .getAllPedidos();
+    return allPedidos.map((pedido) => new PedidoPresenter(pedido));
   }
 
   @ApiOperation({
@@ -34,8 +60,29 @@ export class PedidosController {
     description: 'Dados inválidos ou incorretos',
   })
   @Post()
-  incluir(): PedidoPresenter {
-    // TODO: implementar com repositories
+  async incluir(@Body() pedidoDto: PedidoDto): Promise<PedidoPresenter> {
+    let cliente = null;
+    if (pedidoDto.clienteInformouCpf()) {
+      cliente = await this.clienteUseCasesUseCaseProxy.getInstance().getClienteByCpf(pedidoDto.clienteCpf);
+      if (cliente === null)
+        throw new NotFoundException('Cliente não encontrado');
+    }
+
+    const items = pedidoDto.itensPedido.map(async (item) => {
+      const produto: Produto = await this.produtosUseCasesUseCaseProxy
+        .getInstance()
+        .getProdutoById(item.produtoId);
+      return new ItemPedido(produto, item.quantidade);
+    });
+
+    // const bla = await Promise.allSettled(items)
+    //
+    // bla
+    // .filter(result => result.status === `fulfilled`)
+    // .map(result => result.)
+
+    new Pedido('123', cliente, items);
+
     return null;
   }
 }

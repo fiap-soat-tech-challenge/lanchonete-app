@@ -6,7 +6,7 @@ export class ItemPedido {
   private readonly _quantidade: number;
   private readonly _preco: number;
 
-  public constructor(produto: Produto, quantidade: number, preco: number);
+  public constructor(produto: Produto, quantidade: number);
 
   public constructor(
     id: number,

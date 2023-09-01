@@ -1,12 +1,6 @@
 import { Categoria } from '../../../../domain/model/categoria';
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsCurrency,
-  IsEnum,
-  IsNotEmpty,
-  MaxLength, Min,
-  MinLength,
-} from 'class-validator';
+import { IsEnum, IsNotEmpty, MaxLength, Min, MinLength } from 'class-validator';
 import { Produto } from '../../../../domain/model/produto';
 
 export class ProdutoDto {

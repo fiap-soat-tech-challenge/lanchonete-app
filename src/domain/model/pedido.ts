@@ -12,13 +12,9 @@ export class Pedido {
   private readonly _dataHoraCadastro: Date;
 
   public constructor(
-    id: number,
     codigoPedido: number,
     cliente: Cliente,
     itensPedido: Array<ItemPedido>,
-    precoTotal: number,
-    situacao: Situacao,
-    dataHoraCadastro: Date,
   );
 
   public constructor(
@@ -32,13 +28,11 @@ export class Pedido {
   );
 
   public constructor(...params: any[]) {
-    if (params.length === 6) {
+    if (params.length === 3) {
       this._codigoPedido = params[0];
       this._cliente = params[1];
       this._itensPedido = params[2];
-      this._precoTotal = params[3];
-      this._situacao = params[4];
-      this._dataHoraCadastro = params[5];
+      this._precoTotal = 0; // TODO: fazer calculo
       return;
     }
     this._id = params[0];

@@ -5,6 +5,10 @@ import { UseCaseProxy } from './use-case-proxy';
 import { ClienteUseCases } from '../../usecases/cliente.use.cases';
 import { ProdutoRepositoryImpl } from '../repositories/produto.repository.impl';
 import { ProdutosUseCases } from '../../usecases/produtos.use.cases';
+import { PedidoRepositoryImpl } from '../repositories/pedido.repository.impl';
+import { ItemPedidoRepositoryImpl } from '../repositories/item-pedido.repository.impl';
+import { PedidoUseCases } from '../../usecases/pedido.use.cases';
+import { ItemPedidoUseCases } from '../../usecases/item-pedido.use.cases';
 
 @Module({
   imports: [RepositoriesModule],
@@ -12,6 +16,8 @@ import { ProdutosUseCases } from '../../usecases/produtos.use.cases';
 export class UseCasesProxyModule {
   static CLIENTE_USECASES_PROXY = 'clienteUseCasesProxy';
   static PRODUTO_USECASES_PROXY = 'produtoUseCasesProxy';
+  static PEDIDO_USECASES_PROXY = 'pedidoUseCasesProxy';
+  static ITEM_PEDIDO_USECASES_PROXY = 'itemPedidoUseCasesProxy';
 
   static register(): DynamicModule {
     return {
@@ -29,10 +35,24 @@ export class UseCasesProxyModule {
           useFactory: (produtoRepository: ProdutoRepositoryImpl) =>
             new UseCaseProxy(new ProdutosUseCases(produtoRepository)),
         },
+        {
+          inject: [PedidoRepositoryImpl],
+          provide: UseCasesProxyModule.PEDIDO_USECASES_PROXY,
+          useFactory: (pedidoRepository: PedidoRepositoryImpl) =>
+            new UseCaseProxy(new PedidoUseCases(pedidoRepository)),
+        },
+        {
+          inject: [ItemPedidoRepositoryImpl],
+          provide: UseCasesProxyModule.ITEM_PEDIDO_USECASES_PROXY,
+          useFactory: (itemPedidoRepository: ItemPedidoRepositoryImpl) =>
+            new UseCaseProxy(new ItemPedidoUseCases(itemPedidoRepository)),
+        },
       ],
       exports: [
         UseCasesProxyModule.CLIENTE_USECASES_PROXY,
         UseCasesProxyModule.PRODUTO_USECASES_PROXY,
+        UseCasesProxyModule.PEDIDO_USECASES_PROXY,
+        UseCasesProxyModule.ITEM_PEDIDO_USECASES_PROXY,
       ],
     };
   }
