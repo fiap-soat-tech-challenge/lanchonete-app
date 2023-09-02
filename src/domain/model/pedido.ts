@@ -39,7 +39,7 @@ export class Pedido {
     this._codigoPedido = params[1];
     this._cliente = params[2];
     this._itensPedido = params[3];
-    this._precoTotal = this.getPrecoTotal(params[3]);
+    this._precoTotal = params[4];
     this._situacao = params[5];
     this._dataHoraCadastro = params[6];
   }
@@ -73,10 +73,6 @@ export class Pedido {
   }
 
   private getPrecoTotal(itensPedido: Array<ItemPedido>): number {
-    const total = itensPedido.reduce(
-      (x, item) => item.quantidade * item.preco,
-      0,
-    );
-    return total * 100;
+    return itensPedido.reduce((x, item) => item.quantidade * item.preco, 0);
   }
 }

@@ -15,13 +15,13 @@ export class PedidoRepositoryImpl implements PedidoRepository {
     return pedidos.map((entity) => PedidoConverter.toPedido(entity));
   }
 
-  async findLast(): Promise<Pedido | null> {
+  async findLastCodigo(): Promise<number | null> {
     const lastPedidoEntity = await this.pedidoRepository.findOne({
       where: {},
       order: { id: 'DESC' },
     });
     if (lastPedidoEntity === null) return null;
-    return PedidoConverter.toPedido(lastPedidoEntity);
+    return lastPedidoEntity.codigoPedido;
   }
 
   async insert(pedido: Pedido): Promise<Pedido> {

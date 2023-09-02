@@ -9,11 +9,11 @@ export class PedidoUseCases {
   }
 
   async getNextCodigo(): Promise<number> {
-    const lastPedido = await this.pedidoRepository.findLast();
+    const lastPedido = await this.pedidoRepository.findLastCodigo();
     if (lastPedido === null) {
       return 1;
     }
-    return lastPedido.codigoPedido + 1;
+    return lastPedido + 1;
   }
 
   async addPedido(pedido: Pedido): Promise<Pedido> {

@@ -53,7 +53,7 @@ export class Produto {
   }
 
   get preco(): number {
-    return this._preco / 100;
+    return this._preco;
   }
 
   get dataCadastro(): Date {

@@ -19,7 +19,7 @@ export class ItemPedido {
     if (params.length === 2) {
       this._produto = params[0];
       this._quantidade = params[1];
-      this._preco = params[0].preco * params[1] * 100;
+      this._preco = params[0].preco * params[1];
       return;
     }
     this._id = params[0];
@@ -41,6 +41,6 @@ export class ItemPedido {
   }
 
   get preco(): number {
-    return this._preco / 100;
+    return this._preco;
   }
 }

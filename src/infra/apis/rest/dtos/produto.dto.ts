@@ -25,11 +25,6 @@ export class ProdutoDto {
   readonly categoria: Categoria;
 
   public toProduto() {
-    return new Produto(
-      this.nome,
-      this.descricao,
-      this.preco * 100,
-      this.categoria,
-    );
+    return new Produto(this.nome, this.descricao, this.preco, this.categoria);
   }
 }

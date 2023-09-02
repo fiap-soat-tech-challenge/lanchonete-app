@@ -25,7 +25,7 @@ export class ProdutoPresenter {
     this.id = produto.id;
     this.nome = produto.nome;
     this.descricao = produto.descricao;
-    this.preco = produto.preco;
+    this.preco = produto.preco / 100;
     this.dataCadastro = produto.dataCadastro;
     this.categoria = produto.categoria;
   }
