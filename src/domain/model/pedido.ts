@@ -73,6 +73,8 @@ export class Pedido {
   }
 
   private getPrecoTotal(itensPedido: Array<ItemPedido>): number {
-    return itensPedido.reduce((x, item) => item.quantidade * item.preco, 0);
+    return itensPedido.reduce((valor, item) => {
+      return valor + item.quantidade * item.preco;
+    }, 0);
   }
 }
