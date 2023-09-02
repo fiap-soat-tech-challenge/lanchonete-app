@@ -1,12 +1,4 @@
-import { Produto } from '../../domain/model/produto';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, } from 'typeorm';
 import { PedidoEntity } from './pedido.entity';
 import { ProdutoEntity } from './produto.entity';
 
@@ -15,9 +7,8 @@ export class ItemPedidoEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => ProdutoEntity)
-  @JoinColumn()
-  produto: Produto;
+  @ManyToOne(() => ProdutoEntity)
+  produto: ProdutoEntity;
 
   @Column()
   quantidade: number;
@@ -28,7 +19,7 @@ export class ItemPedidoEntity {
   @ManyToOne(() => PedidoEntity, (pedido) => pedido.itensPedido)
   pedido: PedidoEntity;
 
-  constructor(produto: Produto, quantidade: number, preco: number) {
+  constructor(produto: ProdutoEntity, quantidade: number, preco: number) {
     this.produto = produto;
     this.quantidade = quantidade;
     this.preco = preco;

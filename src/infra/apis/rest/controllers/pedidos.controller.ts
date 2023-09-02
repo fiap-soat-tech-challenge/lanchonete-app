@@ -94,8 +94,6 @@ export class PedidosController {
       .getInstance()
       .addPedido(new Pedido(nextCodigo, cliente, items));
 
-    console.log(pedido);
-
     return new PedidoPresenter(pedido);
   }
 }

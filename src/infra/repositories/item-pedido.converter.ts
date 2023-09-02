@@ -1,11 +1,12 @@
 import { ItemPedido } from '../../domain/model/item-pedido';
 import { ItemPedidoEntity } from '../entities/item-pedido.entity';
+import { ProdutoConverter } from '../shared/produto.converter';
 
 export class ItemPedidoConverter {
   public static toItemPedido(entity: ItemPedidoEntity): ItemPedido {
     return new ItemPedido(
       entity.id,
-      entity.produto,
+      ProdutoConverter.toProduto(entity.produto),
       entity.quantidade,
       entity.preco,
     );
