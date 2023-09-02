@@ -74,7 +74,7 @@ export class Pedido {
 
   private getPrecoTotal(itensPedido: Array<ItemPedido>): number {
     return itensPedido.reduce((valor, item) => {
-      return valor + item.quantidade * item.preco;
+      return valor + item.preco;
     }, 0);
   }
 }
