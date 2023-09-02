@@ -1,6 +1,6 @@
 export enum Situacao {
-  RECEBIDO = 'Recebido',
-  EM_PREPARACAO = 'Em preparação',
-  PRONTO = 'Pronto',
-  FINALIZADO = 'Finalizado',
+  RECEBIDO = 'RECEBIDO',
+  EM_PREPARACAO = 'EM_PREPARACAO',
+  PRONTO = 'PRONTO',
+  FINALIZADO = 'FINALIZADO',
 }

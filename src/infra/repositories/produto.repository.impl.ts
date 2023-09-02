@@ -29,7 +29,9 @@ export class ProdutoRepositoryImpl implements ProdutoRepository {
   }
 
   async findById(id: number): Promise<Produto> {
-    const produtoEntity = await this.produtoEntityRepository.findOneBy({ id: Equal(id) });
+    const produtoEntity = await this.produtoEntityRepository.findOneBy({
+      id: Equal(id),
+    });
     if (produtoEntity) {
       return this.toProduto(produtoEntity);
     }
@@ -55,7 +57,7 @@ export class ProdutoRepositoryImpl implements ProdutoRepository {
       produtoEntity.id,
       produtoEntity.nome,
       produtoEntity.descricao,
-      produtoEntity.preco / 100,
+      produtoEntity.preco,
       produtoEntity.dataCadastro,
       produtoEntity.categoria,
     );

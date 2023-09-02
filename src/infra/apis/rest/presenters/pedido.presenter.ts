@@ -29,7 +29,10 @@ export class PedidoPresenter {
   public constructor(pedido: Pedido) {
     this.id = pedido.id;
     this.codigoPedido = pedido.codigoPedido;
-    this.cliente = new PedidoClientePresenter(pedido.cliente);
+    this.cliente =
+      pedido.cliente === null || pedido.cliente === undefined
+        ? null
+        : new PedidoClientePresenter(pedido.cliente);
     this.itensPedido = pedido.itensPedido;
     this.precoTotal = pedido.precoTotal;
     this.situacao = pedido.situacao;

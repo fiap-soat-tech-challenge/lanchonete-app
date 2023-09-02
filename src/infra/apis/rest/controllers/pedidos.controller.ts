@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Inject, NotFoundException, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  NotFoundException,
+  Post,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiOkResponse,
@@ -63,26 +70,32 @@ export class PedidosController {
   async incluir(@Body() pedidoDto: PedidoDto): Promise<PedidoPresenter> {
     let cliente = null;
     if (pedidoDto.clienteInformouCpf()) {
-      cliente = await this.clienteUseCasesUseCaseProxy.getInstance().getClienteByCpf(pedidoDto.clienteCpf);
+      cliente = await this.clienteUseCasesUseCaseProxy
+        .getInstance()
+        .getClienteByCpf(pedidoDto.clienteCpf);
       if (cliente === null)
         throw new NotFoundException('Cliente não encontrado');
     }
 
-    const items = pedidoDto.itensPedido.map(async (item) => {
-      const produto: Produto = await this.produtosUseCasesUseCaseProxy
-        .getInstance()
-        .getProdutoById(item.produtoId);
-      return new ItemPedido(produto, item.quantidade);
-    });
+    const items = await Promise.all(
+      pedidoDto.itensPedido.map(async (item) => {
+        const produto: Produto = await this.produtosUseCasesUseCaseProxy
+          .getInstance()
+          .getProdutoById(item.produtoId);
+        return new ItemPedido(produto, item.quantidade);
+      }),
+    );
 
-    // const bla = await Promise.allSettled(items)
-    //
-    // bla
-    // .filter(result => result.status === `fulfilled`)
-    // .map(result => result.)
+    const nextCodigo = await this.pedidoUseCasesUseCaseProxy
+      .getInstance()
+      .getNextCodigo();
 
-    new Pedido('123', cliente, items);
+    const pedido = await this.pedidoUseCasesUseCaseProxy
+      .getInstance()
+      .addPedido(new Pedido(nextCodigo, cliente, items));
 
-    return null;
+    console.log(pedido);
+
+    return new PedidoPresenter(pedido);
   }
 }

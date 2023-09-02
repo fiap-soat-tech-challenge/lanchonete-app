@@ -16,16 +16,16 @@ export class ItemPedido {
   );
 
   public constructor(...params: any[]) {
-    if (params.length === 3) {
+    if (params.length === 2) {
       this._produto = params[0];
       this._quantidade = params[1];
-      this._preco = params[2];
+      this._preco = params[0].preco * params[1] * 100;
       return;
     }
     this._id = params[0];
     this._produto = params[1];
     this._quantidade = params[2];
-    this._preco = params[2];
+    this._preco = params[3];
   }
 
   get id(): number | null {
@@ -41,6 +41,6 @@ export class ItemPedido {
   }
 
   get preco(): number {
-    return this._preco;
+    return this._preco / 100;
   }
 }

@@ -27,4 +27,10 @@ export class ItemPedidoEntity {
 
   @ManyToOne(() => PedidoEntity, (pedido) => pedido.itensPedido)
   pedido: PedidoEntity;
+
+  constructor(produto: Produto, quantidade: number, preco: number) {
+    this.produto = produto;
+    this.quantidade = quantidade;
+    this.preco = preco;
+  }
 }

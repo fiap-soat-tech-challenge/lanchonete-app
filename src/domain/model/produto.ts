@@ -28,7 +28,7 @@ export class Produto {
     if (params.length === 4) {
       this._nome = params[0];
       this._descricao = params[1];
-      this._preco = params[2];
+      this._preco = params[2] * 100;
       this._categoria = params[3];
       return;
     }
@@ -53,7 +53,7 @@ export class Produto {
   }
 
   get preco(): number {
-    return this._preco;
+    return this._preco / 100;
   }
 
   get dataCadastro(): Date {

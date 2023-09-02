@@ -7,7 +7,7 @@ export class Pedido {
   private readonly _codigoPedido: number;
   private readonly _cliente: Cliente;
   private readonly _itensPedido: Array<ItemPedido>;
-  private readonly _precoTotal: number;
+  private _precoTotal: number;
   private readonly _situacao: Situacao;
   private readonly _dataHoraCadastro: Date;
 
@@ -32,14 +32,14 @@ export class Pedido {
       this._codigoPedido = params[0];
       this._cliente = params[1];
       this._itensPedido = params[2];
-      this._precoTotal = 0; // TODO: fazer calculo
+      this._precoTotal = this.getPrecoTotal(params[2]);
       return;
     }
     this._id = params[0];
     this._codigoPedido = params[1];
     this._cliente = params[2];
     this._itensPedido = params[3];
-    this._precoTotal = params[4];
+    this._precoTotal = this.getPrecoTotal(params[3]);
     this._situacao = params[5];
     this._dataHoraCadastro = params[6];
   }
@@ -70,5 +70,13 @@ export class Pedido {
 
   get dataHoraCadastro(): Date {
     return this._dataHoraCadastro;
+  }
+
+  private getPrecoTotal(itensPedido: Array<ItemPedido>): number {
+    const total = itensPedido.reduce(
+      (x, item) => item.quantidade * item.preco,
+      0,
+    );
+    return total * 100;
   }
 }
