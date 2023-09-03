@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Inject, Param, Post } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -51,7 +51,6 @@ export class ClientesController {
   })
   @Post()
   async cadastrar(@Body() clienteDto: ClienteDto): Promise<ClientePresenter> {
-    // TODO: Arrumar validacao de campos unicos (CPF e email)
     const cliente = await this.clienteUseCasesUseCaseProxy
       .getInstance()
       .addCliente(clienteDto.toCliente());
@@ -73,6 +72,9 @@ export class ClientesController {
     const clienteByCpf = await this.clienteUseCasesUseCaseProxy
       .getInstance()
       .getClienteByCpf(cpf);
+    if (clienteByCpf === null) {
+      throw new HttpException('NotFound', HttpStatus.NOT_FOUND);
+    }
     return new ClientePresenter(clienteByCpf);
   }
 }

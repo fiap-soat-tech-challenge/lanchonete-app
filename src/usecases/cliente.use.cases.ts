@@ -8,7 +8,7 @@ export class ClienteUseCases {
     return await this.clienteRepository.findAll();
   }
 
-  async getClienteByCpf(cpf: string): Promise<Cliente> {
+  async getClienteByCpf(cpf: string): Promise<Cliente | null> {
     return await this.clienteRepository.findByCpf(cpf);
   }
 
