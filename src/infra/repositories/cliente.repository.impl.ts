@@ -4,6 +4,7 @@ import { ClienteEntity } from '../entities/cliente.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Equal, InsertResult, Repository } from 'typeorm';
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { ClienteConverter } from '../shared/cliente.converter';
 
 export class ClienteRepositoryImpl implements ClienteRepository {
   constructor(
@@ -13,7 +14,7 @@ export class ClienteRepositoryImpl implements ClienteRepository {
 
   async findAll(): Promise<Cliente[]> {
     const clienteEntities = await this.clienteEntityRepository.find();
-    return clienteEntities.map((entity) => this.toCliente(entity));
+    return clienteEntities.map((entity) => ClienteConverter.toCliente(entity));
   }
 
   async findByCpf(cpf: string): Promise<Cliente | null> {
@@ -21,7 +22,7 @@ export class ClienteRepositoryImpl implements ClienteRepository {
       cpf: Equal(cpf),
     });
     if (clienteEntity === null) return null;
-    return this.toCliente(clienteEntity);
+    return ClienteConverter.toCliente(clienteEntity);
   }
 
   async findByEmail(email: string): Promise<Cliente | null> {
@@ -29,33 +30,13 @@ export class ClienteRepositoryImpl implements ClienteRepository {
       email: Equal(email),
     });
     if (clienteEntity === null) return null;
-    return this.toCliente(clienteEntity);
+    return ClienteConverter.toCliente(clienteEntity);
   }
 
   async insert(cliente: Cliente): Promise<Cliente> {
-    const entityToInsert = this.toClienteEntity(cliente);
+    const entityToInsert = ClienteConverter.toClienteEntity(cliente);
     const clienteEntity =
       await this.clienteEntityRepository.save(entityToInsert);
-    return this.toCliente(clienteEntity);
-  }
-
-  private toCliente(clienteEntity: ClienteEntity): Cliente {
-    return new Cliente(
-      clienteEntity.id,
-      clienteEntity.cpf,
-      clienteEntity.nome,
-      clienteEntity.email,
-      clienteEntity.telefone,
-      clienteEntity.dataHoraCadastro,
-    );
-  }
-
-  private toClienteEntity(cliente: Cliente): ClienteEntity {
-    return new ClienteEntity(
-      cliente.cpf,
-      cliente.nome,
-      cliente.email,
-      cliente.telefone,
-    );
+    return ClienteConverter.toCliente(clienteEntity);
   }
 }

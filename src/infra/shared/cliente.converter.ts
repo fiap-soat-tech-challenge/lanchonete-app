@@ -16,11 +16,16 @@ export class ClienteConverter {
 
   public static toClienteEntity(cliente: Cliente): ClienteEntity {
     if (cliente === null) return null;
-    return new ClienteEntity(
+    const clienteEntity = new ClienteEntity(
       cliente.cpf,
       cliente.nome,
       cliente.email,
       cliente.telefone,
     );
+    if (cliente.id && cliente.dataHoraCadastro) {
+      clienteEntity.id = cliente.id;
+      clienteEntity.dataHoraCadastro = cliente.dataHoraCadastro;
+    }
+    return clienteEntity;
   }
 }

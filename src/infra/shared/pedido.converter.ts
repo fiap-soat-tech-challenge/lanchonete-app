@@ -1,7 +1,7 @@
 import { PedidoEntity } from '../entities/pedido.entity';
 import { Pedido } from '../../domain/model/pedido';
 import { ClienteConverter } from './cliente.converter';
-import { ItemPedidoConverter } from '../repositories/item-pedido.converter';
+import { ItemPedidoConverter } from './item-pedido.converter';
 
 export class PedidoConverter {
   public static toPedido(pedidoEntity: PedidoEntity): Pedido {

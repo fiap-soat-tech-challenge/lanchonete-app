@@ -18,12 +18,10 @@ import { PedidoDto } from '../dtos/pedido.dto';
 import { UseCaseProxy } from '../../../usecases-proxy/use-case-proxy';
 import { PedidoUseCases } from '../../../../usecases/pedido.use.cases';
 import { UseCasesProxyModule } from '../../../usecases-proxy/use-cases-proxy.module';
-import { ItemPedidoUseCases } from '../../../../usecases/item-pedido.use.cases';
 import { ProdutosUseCases } from '../../../../usecases/produtos.use.cases';
 import { Produto } from '../../../../domain/model/produto';
 import { ItemPedido } from '../../../../domain/model/item-pedido';
 import { Pedido } from '../../../../domain/model/pedido';
-import { Cliente } from '../../../../domain/model/cliente';
 import { ClienteUseCases } from '../../../../usecases/cliente.use.cases';
 import { CheckoutUseCases } from '../../../../usecases/checkout.use.cases';
 

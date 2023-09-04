@@ -1,5 +1,12 @@
 import { Situacao } from '../../domain/model/situacao';
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { ItemPedidoEntity } from './item-pedido.entity';
 import { ClienteEntity } from './cliente.entity';
 
@@ -11,7 +18,7 @@ export class PedidoEntity {
   @Column()
   codigoPedido: number;
 
-  @ManyToOne(() => ClienteEntity)
+  @ManyToOne(() => ClienteEntity, { nullable: true, onUpdate: 'RESTRICT' })
   cliente: ClienteEntity;
 
   @OneToMany(() => ItemPedidoEntity, (item) => item.pedido, { cascade: true })

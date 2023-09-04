@@ -8,7 +8,6 @@ import { ProdutoRepositoryImpl } from './produto.repository.impl';
 import { PedidoEntity } from '../entities/pedido.entity';
 import { PedidoRepositoryImpl } from './pedido.repository.impl';
 import { ItemPedidoEntity } from '../entities/item-pedido.entity';
-import { ItemPedidoRepositoryImpl } from './item-pedido.repository.impl';
 
 @Module({
   imports: [
@@ -24,13 +23,7 @@ import { ItemPedidoRepositoryImpl } from './item-pedido.repository.impl';
     ClienteRepositoryImpl,
     ProdutoRepositoryImpl,
     PedidoRepositoryImpl,
-    ItemPedidoRepositoryImpl,
   ],
-  exports: [
-    ClienteRepositoryImpl,
-    ProdutoRepositoryImpl,
-    PedidoRepositoryImpl,
-    ItemPedidoRepositoryImpl,
-  ],
+  exports: [ClienteRepositoryImpl, ProdutoRepositoryImpl, PedidoRepositoryImpl],
 })
 export class RepositoriesModule {}
