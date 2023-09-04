@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: service-alb-lanchonete
 spec:
+  type: LoadBalancer
   selector:
     app: lanchonete-app
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
-  type: LoadBalancer
+      targetPort: 3000
