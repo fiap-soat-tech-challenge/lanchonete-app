@@ -12,6 +12,10 @@ export class ClienteUseCases {
     return await this.clienteRepository.findByCpf(cpf);
   }
 
+  async getClienteByEmail(email: string): Promise<Cliente | null> {
+    return await this.clienteRepository.findByEmail(email);
+  }
+
   async addCliente(cliente: Cliente): Promise<Cliente> {
     return await this.clienteRepository.insert(cliente);
   }

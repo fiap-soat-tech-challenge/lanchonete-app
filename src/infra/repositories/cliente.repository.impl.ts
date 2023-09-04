@@ -24,6 +24,14 @@ export class ClienteRepositoryImpl implements ClienteRepository {
     return this.toCliente(clienteEntity);
   }
 
+  async findByEmail(email: string): Promise<Cliente | null> {
+    const clienteEntity = await this.clienteEntityRepository.findOneBy({
+      email: Equal(email),
+    });
+    if (clienteEntity === null) return null;
+    return this.toCliente(clienteEntity);
+  }
+
   async insert(cliente: Cliente): Promise<Cliente> {
     const entityToInsert = this.toClienteEntity(cliente);
     const clienteEntity =

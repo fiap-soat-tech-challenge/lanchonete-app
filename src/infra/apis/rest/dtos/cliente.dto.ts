@@ -7,7 +7,8 @@ import {
   MinLength,
 } from 'class-validator';
 import { Cliente } from '../../../../domain/model/cliente';
-import { UniqueCpfValidation } from '../validations/unique.cpf.validation';
+import { UniqueCpf } from '../validations/unique.cpf.validation';
+import { UniqueEmail } from '../validations/unique.email.validation';
 
 export class ClienteDto {
   @ApiProperty()
@@ -15,7 +16,7 @@ export class ClienteDto {
   @Matches(/\d{3}\.\d{3}\.\d{3}-\d{2}/gm, {
     message: 'Formato de CPF inválido. Use o formato 123.456.789-00',
   })
-  @UniqueCpfValidation({
+  @UniqueCpf({
     message: 'O campo CPF já foi cadastrado',
   })
   readonly cpf: string;
@@ -29,6 +30,9 @@ export class ClienteDto {
   @ApiProperty()
   @IsNotEmpty({ message: 'O email é obrigatório' })
   @IsEmail({}, { message: 'O e-mail deve ser válido' })
+  @UniqueEmail({
+    message: 'O campo email já foi cadastrado',
+  })
   readonly email: string;
 
   @ApiProperty()

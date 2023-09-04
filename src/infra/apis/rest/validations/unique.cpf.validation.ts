@@ -5,15 +5,14 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { UseCasesProxyModule } from '../../../usecases-proxy/use-cases-proxy.module';
 import { UseCaseProxy } from '../../../usecases-proxy/use-case-proxy';
 import { ClienteUseCases } from '../../../../usecases/cliente.use.cases';
 
 @ValidatorConstraint({ async: true })
-export class UniqueCpfValidationConstraint
-  implements ValidatorConstraintInterface
-{
+@Injectable()
+export class UniqueCpfValidation implements ValidatorConstraintInterface {
   constructor(
     @Inject(UseCasesProxyModule.CLIENTE_USECASES_PROXY)
     private clienteUseCasesUseCaseProxy: UseCaseProxy<ClienteUseCases>,
@@ -35,14 +34,14 @@ export class UniqueCpfValidationConstraint
   }
 }
 
-export function UniqueCpfValidation(validationOptions?: ValidationOptions) {
+export function UniqueCpf(validationOptions?: ValidationOptions) {
   return function (object: NonNullable<unknown>, propertyName: string) {
     registerDecorator({
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
       constraints: [],
-      validator: UniqueCpfValidationConstraint,
+      validator: UniqueCpfValidation,
     });
   };
 }
