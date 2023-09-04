@@ -16,14 +16,20 @@ export class ClienteRepositoryImpl implements ClienteRepository {
     return clienteEntities.map((entity) => this.toCliente(entity));
   }
 
-  async findByCpf(cpf: string): Promise<Cliente> {
+  async findByCpf(cpf: string): Promise<Cliente | null> {
     const clienteEntity = await this.clienteEntityRepository.findOneBy({
       cpf: Equal(cpf),
     });
-    if (clienteEntity) {
-      return this.toCliente(clienteEntity);
-    }
-    throw new HttpException('NotFound', HttpStatus.NOT_FOUND);
+    if (clienteEntity === null) return null;
+    return this.toCliente(clienteEntity);
+  }
+
+  async findByEmail(email: string): Promise<Cliente | null> {
+    const clienteEntity = await this.clienteEntityRepository.findOneBy({
+      email: Equal(email),
+    });
+    if (clienteEntity === null) return null;
+    return this.toCliente(clienteEntity);
   }
 
   async insert(cliente: Cliente): Promise<Cliente> {

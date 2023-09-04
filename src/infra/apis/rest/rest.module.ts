@@ -5,9 +5,12 @@ import { ClientesController } from './controllers/clientes.controller';
 import { ProdutosController } from './controllers/produtos.controller';
 import { PedidosController } from './controllers/pedidos.controller';
 import { UseCasesProxyModule } from '../../usecases-proxy/use-cases-proxy.module';
+import { UniqueCpfValidation } from './validations/unique.cpf.validation';
+import { UniqueEmailValidation } from './validations/unique.email.validation';
 
 @Module({
   imports: [UseCasesProxyModule.register()],
+  providers: [UniqueCpfValidation, UniqueEmailValidation],
   controllers: [
     HomeController,
     CategoriasController,
