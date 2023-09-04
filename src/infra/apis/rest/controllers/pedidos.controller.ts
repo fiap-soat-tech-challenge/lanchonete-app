@@ -25,6 +25,7 @@ import { ItemPedido } from '../../../../domain/model/item-pedido';
 import { Pedido } from '../../../../domain/model/pedido';
 import { Cliente } from '../../../../domain/model/cliente';
 import { ClienteUseCases } from '../../../../usecases/cliente.use.cases';
+import { CheckoutUseCases } from '../../../../usecases/checkout.use.cases';
 
 @ApiTags('Pedidos')
 @ApiResponse({ status: '5XX', description: 'Erro interno do sistema' })
@@ -37,6 +38,8 @@ export class PedidosController {
     private produtosUseCasesUseCaseProxy: UseCaseProxy<ProdutosUseCases>,
     @Inject(UseCasesProxyModule.CLIENTE_USECASES_PROXY)
     private clienteUseCasesUseCaseProxy: UseCaseProxy<ClienteUseCases>,
+    @Inject(UseCasesProxyModule.CHECKOUT_USECASES_PROXY)
+    private checkoutUseCasesUseCaseProxy: UseCaseProxy<CheckoutUseCases>,
   ) {}
 
   @ApiOperation({
@@ -90,9 +93,15 @@ export class PedidosController {
       .getInstance()
       .getNextCodigo();
 
+    const novoPedido = new Pedido(nextCodigo, cliente, items);
+
+    await this.checkoutUseCasesUseCaseProxy
+      .getInstance()
+      .makePagamento(novoPedido);
+
     const pedido = await this.pedidoUseCasesUseCaseProxy
       .getInstance()
-      .addPedido(new Pedido(nextCodigo, cliente, items));
+      .addPedido(novoPedido);
 
     return new PedidoPresenter(pedido);
   }

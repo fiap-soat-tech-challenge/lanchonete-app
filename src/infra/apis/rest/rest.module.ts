@@ -7,9 +7,10 @@ import { PedidosController } from './controllers/pedidos.controller';
 import { UseCasesProxyModule } from '../../usecases-proxy/use-cases-proxy.module';
 import { UniqueCpfValidation } from './validations/unique.cpf.validation';
 import { UniqueEmailValidation } from './validations/unique.email.validation';
+import { CheckoutModule } from './services/checkout/checkout.module';
 
 @Module({
-  imports: [UseCasesProxyModule.register()],
+  imports: [UseCasesProxyModule.register(), CheckoutModule],
   providers: [UniqueCpfValidation, UniqueEmailValidation],
   controllers: [
     HomeController,
