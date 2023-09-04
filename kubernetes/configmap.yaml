@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lanchonete-configmap
+data:
+  NODE_ENV: "development"
+  DB_HOST: "lanchonete_database"
+  DB_PORT: "5432"
+  DB_NAME: "lanchonete"
+  DB_SCHEMA: "public"

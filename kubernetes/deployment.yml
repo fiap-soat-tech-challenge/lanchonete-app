@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lanchonete-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: lanchonete-app
+  template:
+    metadata:
+      name: lanchonete-app
+      labels:
+        app: lanchonete-app
+    spec:
+      containers:
+        - name: lanchonete-app
+          image: jonilsonds9/lanchonete-app:latest
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: lanchonete-configmap
+            - secretRef:
+                name: lanchonete-secrets
