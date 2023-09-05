@@ -7,10 +7,10 @@ import { PedidosController } from './controllers/pedidos.controller';
 import { UseCasesProxyModule } from '../../usecases-proxy/use-cases-proxy.module';
 import { UniqueCpfValidation } from './validations/unique.cpf.validation';
 import { UniqueEmailValidation } from './validations/unique.email.validation';
-import { CheckoutModule } from './services/checkout/checkout.module';
+import { PagamentosController } from './controllers/pagamentos.controller';
 
 @Module({
-  imports: [UseCasesProxyModule.register(), CheckoutModule],
+  imports: [UseCasesProxyModule.register()],
   providers: [UniqueCpfValidation, UniqueEmailValidation],
   controllers: [
     HomeController,
@@ -18,6 +18,7 @@ import { CheckoutModule } from './services/checkout/checkout.module';
     ClientesController,
     ProdutosController,
     PedidosController,
+    PagamentosController,
   ],
 })
 export class RestModule {}

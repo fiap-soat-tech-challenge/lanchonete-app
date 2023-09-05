@@ -4,8 +4,8 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
+  OneToMany, OneToOne,
+  PrimaryGeneratedColumn
 } from 'typeorm';
 import { ItemPedidoEntity } from './item-pedido.entity';
 import { ClienteEntity } from './cliente.entity';

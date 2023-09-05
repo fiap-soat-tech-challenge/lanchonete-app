@@ -7,18 +7,17 @@ import { ProdutoRepositoryImpl } from '../repositories/produto.repository.impl';
 import { ProdutosUseCases } from '../../usecases/produtos.use.cases';
 import { PedidoRepositoryImpl } from '../repositories/pedido.repository.impl';
 import { PedidoUseCases } from '../../usecases/pedido.use.cases';
-import { CheckoutModule } from '../apis/rest/services/checkout/checkout.module';
-import { CheckoutService } from '../apis/rest/services/checkout/checkout.service';
-import { CheckoutUseCases } from '../../usecases/checkout.use.cases';
+import { PagamentoRepositoryImpl } from '../repositories/pagamento.repository.impl';
+import { PaymentUseCases } from '../../usecases/payment.use.cases';
 
 @Module({
-  imports: [RepositoriesModule, CheckoutModule],
+  imports: [RepositoriesModule],
 })
 export class UseCasesProxyModule {
   static CLIENTE_USECASES_PROXY = 'clienteUseCasesProxy';
   static PRODUTO_USECASES_PROXY = 'produtoUseCasesProxy';
   static PEDIDO_USECASES_PROXY = 'pedidoUseCasesProxy';
-  static CHECKOUT_USECASES_PROXY = 'checkoutUseCasesProxy';
+  static PAGAMENTO_USECASES_PROXY = 'pagamentoUseCasesProxy';
 
   static register(): DynamicModule {
     return {
@@ -43,17 +42,17 @@ export class UseCasesProxyModule {
             new UseCaseProxy(new PedidoUseCases(pedidoRepository)),
         },
         {
-          inject: [CheckoutService],
-          provide: UseCasesProxyModule.CHECKOUT_USECASES_PROXY,
-          useFactory: (checkoutService: CheckoutService) =>
-            new UseCaseProxy(new CheckoutUseCases(checkoutService)),
+          inject: [PagamentoRepositoryImpl],
+          provide: UseCasesProxyModule.PAGAMENTO_USECASES_PROXY,
+          useFactory: (pagamentoRepository: PagamentoRepositoryImpl) =>
+            new UseCaseProxy(new PaymentUseCases(pagamentoRepository)),
         },
       ],
       exports: [
         UseCasesProxyModule.CLIENTE_USECASES_PROXY,
         UseCasesProxyModule.PRODUTO_USECASES_PROXY,
         UseCasesProxyModule.PEDIDO_USECASES_PROXY,
-        UseCasesProxyModule.CHECKOUT_USECASES_PROXY,
+        UseCasesProxyModule.PAGAMENTO_USECASES_PROXY,
       ],
     };
   }
