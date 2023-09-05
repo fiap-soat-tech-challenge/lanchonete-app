@@ -24,6 +24,7 @@ import { ItemPedido } from '../../../../domain/model/item-pedido';
 import { Pedido } from '../../../../domain/model/pedido';
 import { ClienteUseCases } from '../../../../usecases/cliente.use.cases';
 import { CheckoutUseCases } from '../../../../usecases/checkout.use.cases';
+import { Situacao } from 'src/domain/model/situacao';
 
 @ApiTags('Pedidos')
 @ApiResponse({ status: '5XX', description: 'Erro interno do sistema' })
@@ -53,7 +54,24 @@ export class PedidosController {
     const allPedidos = await this.pedidoUseCasesUseCaseProxy
       .getInstance()
       .getAllPedidos();
-    return allPedidos.map((pedido) => new PedidoPresenter(pedido));
+
+    const allPedidosSorted = allPedidos
+      .filter((pedido) => {
+        return pedido.situacao !== 'FINALIZADO';
+      })
+      .sort((a, b) => {
+        const ordemSituacao = [
+          Situacao.PRONTO,
+          Situacao.EM_PREPARACAO,
+          Situacao.RECEBIDO,
+        ];
+
+        return (
+          ordemSituacao.indexOf(a.situacao) - ordemSituacao.indexOf(b.situacao)
+        );
+      });
+
+    return allPedidosSorted.map((pedido) => new PedidoPresenter(pedido));
   }
 
   @ApiOperation({
