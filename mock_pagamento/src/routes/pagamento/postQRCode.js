@@ -4,7 +4,7 @@ import { mudarStatusDePagamento } from '../../services/status';
 
 export default async (request, response) => {
   const valor = request.body.valor;
-  const idPedido = request.body.idPedido;
+  const pagamentoId = request.body.pagamentoId;
 
   const qrcodePagamento = {
     id: uuidv4(),
@@ -12,7 +12,7 @@ export default async (request, response) => {
   };
 
   setTimeout(() => {
-    mudarStatusDePagamento(idPedido);
+    mudarStatusDePagamento(pagamentoId);
   }, 5000);
 
   response.json({
