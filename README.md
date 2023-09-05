@@ -12,9 +12,6 @@
   </p>
 </p>
 
-<!--
-*** Template baseado em https://github.com/othneildrew/Best-README-Template 
--->
 
 <!-- TITULO DO PROJETO -->
 <br />
@@ -58,7 +55,7 @@ A instalação é bem simples, siga as seguintes etapas:
 
 1. Clone o repositório
    ```sh
-   git clone https://github.com/ValSousa/lanchonete.git
+   git clone https://github.com/jonilsonds9/lanchonete.git
    ```
 2. Entre na pasta do projeto
    ```sh
@@ -95,7 +92,14 @@ Este sistema conta com uma aplicação externa que realiza os pagamentos, de for
 
 <p align="right">(<a href="#readme-top">Voltar para o topo</a>)</p>
 
+<!-- KUBERNETES -->
+## Kubernetes
 
+Os arquivos .yml com todas as instruções de cluster estão no diretório:
+
+```
+|- kubernetes
+```
 
 <!-- ROTEIRO -->
 ## Roteiro
