@@ -8,6 +8,8 @@ import { ProdutoRepositoryImpl } from './produto.repository.impl';
 import { PedidoEntity } from '../entities/pedido.entity';
 import { PedidoRepositoryImpl } from './pedido.repository.impl';
 import { ItemPedidoEntity } from '../entities/item-pedido.entity';
+import { PagamentoEntity } from '../entities/pagamento.entity';
+import { PagamentoRepositoryImpl } from './pagamento.repository.impl';
 
 @Module({
   imports: [
@@ -17,13 +19,20 @@ import { ItemPedidoEntity } from '../entities/item-pedido.entity';
       ProdutoEntity,
       PedidoEntity,
       ItemPedidoEntity,
+      PagamentoEntity,
     ]),
   ],
   providers: [
     ClienteRepositoryImpl,
     ProdutoRepositoryImpl,
     PedidoRepositoryImpl,
+    PagamentoRepositoryImpl,
   ],
-  exports: [ClienteRepositoryImpl, ProdutoRepositoryImpl, PedidoRepositoryImpl],
+  exports: [
+    ClienteRepositoryImpl,
+    ProdutoRepositoryImpl,
+    PedidoRepositoryImpl,
+    PagamentoRepositoryImpl,
+  ],
 })
 export class RepositoriesModule {}

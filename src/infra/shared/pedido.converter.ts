@@ -5,10 +5,17 @@ import { ItemPedidoConverter } from './item-pedido.converter';
 
 export class PedidoConverter {
   public static toPedido(pedidoEntity: PedidoEntity): Pedido {
-    const cliente = ClienteConverter.toCliente(pedidoEntity.cliente);
-    const itensPedidos = ItemPedidoConverter.toItensPedido(
-      pedidoEntity.itensPedido,
-    );
+    let cliente = null;
+    if (pedidoEntity.cliente) {
+      cliente = ClienteConverter.toCliente(pedidoEntity.cliente);
+    }
+
+    let itensPedidos = null;
+    if (pedidoEntity.itensPedido) {
+      itensPedidos = ItemPedidoConverter.toItensPedido(
+        pedidoEntity.itensPedido,
+      );
+    }
 
     return new Pedido(
       pedidoEntity.id,

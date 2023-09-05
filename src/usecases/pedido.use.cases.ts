@@ -8,6 +8,10 @@ export class PedidoUseCases {
     return await this.pedidoRepository.findAll();
   }
 
+  async getPedidoById(id: number): Promise<Pedido> {
+    return await this.pedidoRepository.findById(id);
+  }
+
   async getNextCodigo(): Promise<number> {
     const lastPedido = await this.pedidoRepository.findLastCodigo();
     if (lastPedido === null) {

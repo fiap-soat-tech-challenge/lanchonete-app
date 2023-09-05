@@ -23,7 +23,6 @@ import { Produto } from '../../../../domain/model/produto';
 import { ItemPedido } from '../../../../domain/model/item-pedido';
 import { Pedido } from '../../../../domain/model/pedido';
 import { ClienteUseCases } from '../../../../usecases/cliente.use.cases';
-import { CheckoutUseCases } from '../../../../usecases/checkout.use.cases';
 import { Situacao } from 'src/domain/model/situacao';
 
 @ApiTags('Pedidos')
@@ -37,8 +36,6 @@ export class PedidosController {
     private produtosUseCasesUseCaseProxy: UseCaseProxy<ProdutosUseCases>,
     @Inject(UseCasesProxyModule.CLIENTE_USECASES_PROXY)
     private clienteUseCasesUseCaseProxy: UseCaseProxy<ClienteUseCases>,
-    @Inject(UseCasesProxyModule.CHECKOUT_USECASES_PROXY)
-    private checkoutUseCasesUseCaseProxy: UseCaseProxy<CheckoutUseCases>,
   ) {}
 
   @ApiOperation({
@@ -109,15 +106,9 @@ export class PedidosController {
       .getInstance()
       .getNextCodigo();
 
-    const novoPedido = new Pedido(nextCodigo, cliente, items);
-
-    await this.checkoutUseCasesUseCaseProxy
-      .getInstance()
-      .makePagamento(novoPedido);
-
     const pedido = await this.pedidoUseCasesUseCaseProxy
       .getInstance()
-      .addPedido(novoPedido);
+      .addPedido(new Pedido(nextCodigo, cliente, items));
 
     return new PedidoPresenter(pedido);
   }
