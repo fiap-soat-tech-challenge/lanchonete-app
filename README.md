@@ -67,7 +67,7 @@ A instalação é bem simples, siga as seguintes etapas:
    ```
 4. Agora execute o projeto usando o docker compose
    ```sh
-   docker compose up
+   docker compose --profile=all up
    ```
 
 <p align="right">(<a href="#readme-top">Voltar para o topo</a>)</p>

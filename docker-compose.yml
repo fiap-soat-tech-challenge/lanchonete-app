@@ -63,6 +63,8 @@ services:
       start_period: 15s
     networks:
       - lanchonete_network
+    profiles:
+      - all
 
 networks:
   lanchonete_network:
