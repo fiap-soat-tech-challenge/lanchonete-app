@@ -80,15 +80,43 @@ Este sistema conta com uma aplicação externa que realiza os pagamentos, de for
 <!-- EXEMPLOS DE USO -->
 ## Exemplos de uso
 
+### Para acessar a home da API
+- http://localhost:3000/
+
+Nessa página você terá o link para a documentação (Swagger) e poderar utilizar toda a aplicação!
+
 ### Para acessar o Swagger UI use uma das seguintes URLs
 - http://localhost:3000/api/docs
-- http://localhost:3000/swagger-ui.html
-
-### Para acessar a documentação da API (JSON)
-    http://localhost:3000/v3/api-docs
 
 ### Health Check
-    http://localhost:3000/actuator/health
+    http://localhost:3000/health
+
+A resposta deve seguir o seguinte formato:
+
+```json
+{
+  "status": "ok",
+  "info": {
+    "database": {
+      "status": "up"
+    },
+    "gateway-pagamento": {
+      "status": "up"
+    }
+  },
+  "error": {
+    
+  },
+  "details": {
+    "database": {
+      "status": "up"
+    },
+    "gateway-pagamento": {
+      "status": "up"
+    }
+  }
+}
+```
 
 <p align="right">(<a href="#readme-top">Voltar para o topo</a>)</p>
 
