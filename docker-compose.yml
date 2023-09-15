@@ -20,6 +20,8 @@ services:
       interval: 5s #intervalo de tempo
       timeout: 5s #tempo maximo de espera
       retries: 5 # numero de tentativas
+    networks:
+      - lanchonete_network
 
   mock_pagamento:
     build: ./mock_pagamento
@@ -27,12 +29,16 @@ services:
     container_name: lanchonete_pagamento
     ports:
       - "3001:3001"
+    env_file:
+      - ./mock_pagamento/.env # for all on docker use .env.docker
     healthcheck:
-      test: wget --no-verbose --tries=1 --spider http://localhost:3000/ping || exit 1
+      test: wget --no-verbose --tries=1 --spider http://localhost:3001/ping || exit 1
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 15s
+    networks:
+      - lanchonete_network
 
   app:
     build:
@@ -55,3 +61,9 @@ services:
       timeout: 5s
       retries: 5
       start_period: 15s
+    networks:
+      - lanchonete_network
+
+networks:
+  lanchonete_network:
+    driver: bridge

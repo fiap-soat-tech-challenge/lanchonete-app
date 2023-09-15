@@ -1,7 +1,10 @@
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
 export const mudarStatusDePagamento = async (pagamentoId) => {
   const response = await fetch(
-    'http://localhost:3000/api/pagamentos/processar', // TODO: Arrumar URL
-    {
+    `http://${process.env.LACHONETE_HOST}:${process.env.LACHONETE_PORT}/api/pagamentos/processar`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',

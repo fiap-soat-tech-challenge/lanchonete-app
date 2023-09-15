@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PagamentoQrcodePresenter } from '../apis/rest/presenters/pagamento.qrcode.presenter';
 import { Pagamento } from '../../domain/model/pagamento';
+import * as process from 'process';
 
 @Injectable()
 export class PagamentoService {
   async generateCode(pagamento: Pagamento): Promise<PagamentoQrcodePresenter> {
-    const response = await fetch(`http://localhost:3001/pagamento/qrcode`, {
+    const response = await fetch(process.env.PAYMENT_URL, {
       method: 'POST',
       body: JSON.stringify({
         valor: pagamento.pedido.precoTotal,
