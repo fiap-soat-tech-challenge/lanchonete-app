@@ -13,6 +13,7 @@ export class Pagamento {
   public constructor(...params: any[]) {
     if (params.length === 1) {
       this._pedido = params[0];
+      this._status = StatusPagamento.PENDENTE;
       return;
     }
     this._id = params[0];

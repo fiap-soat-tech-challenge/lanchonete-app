@@ -18,7 +18,7 @@ export class PagamentoStatusPresenter {
   constructor(pagamento: Pagamento) {
     this.pedidoId = pagamento.id;
     this.codigoPedido = pagamento.pedido.codigoPedido;
-    this.valorTotal = pagamento.pedido.precoTotal;
+    this.valorTotal = pagamento.pedido.precoTotal / 100;
     this.status = pagamento.status;
   }
 }

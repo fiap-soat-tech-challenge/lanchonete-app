@@ -13,6 +13,6 @@ export class PagamentoQrcodePresenter {
   public constructor(id: number, qrcode: string, valor: number) {
     this.id = id;
     this.qrcode = qrcode;
-    this.valor = valor;
+    this.valor = valor / 100;
   }
 }

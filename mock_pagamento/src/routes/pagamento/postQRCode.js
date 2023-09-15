@@ -9,11 +9,12 @@ export default async (request, response) => {
   const qrcodePagamento = {
     id: uuidv4(),
     valor: valor,
+    pagamentoId: pagamentoId,
   };
 
   setTimeout(() => {
     mudarStatusDePagamento(pagamentoId);
-  }, 5000);
+  }, 10000);
 
   response.json({
     qrcode: await QRCode.toDataURL(JSON.stringify(qrcodePagamento)),

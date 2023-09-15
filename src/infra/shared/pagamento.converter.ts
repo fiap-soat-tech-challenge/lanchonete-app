@@ -10,6 +10,6 @@ export class PagamentoConverter {
 
   public static toEntity(pagamento: Pagamento): PagamentoEntity {
     const pedidoEntity = PedidoConverter.toEntity(pagamento.pedido);
-    return new PagamentoEntity(pagamento.id, pedidoEntity, pagamento.status);
+    return new PagamentoEntity(pedidoEntity, pagamento.status);
   }
 }

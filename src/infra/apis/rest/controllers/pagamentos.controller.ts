@@ -6,6 +6,7 @@ import {
   NotFoundException,
   Param,
   Post,
+  Put,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -24,6 +25,7 @@ import { PagamentoQrcodePresenter } from '../presenters/pagamento.qrcode.present
 import { PagamentoStatusPresenter } from '../presenters/pagamento.status.presenter';
 import { Pedido } from '../../../../domain/model/pedido';
 import { PaymentUseCases } from '../../../../usecases/payment.use.cases';
+import { Pagamento } from '../../../../domain/model/pagamento';
 
 @ApiTags('Pagamentos')
 @ApiResponse({ status: '5XX', description: 'Erro interno do sistema' })
@@ -50,14 +52,19 @@ export class PagamentosController {
     @Body() pagamentoQrcodeDto: PagamentoQrcodeDto,
   ): Promise<PagamentoQrcodePresenter> {
     const pedido = await this.getPedido(pagamentoQrcodeDto.pedidoId);
-    const response = await fetch(
-      `${process.env.PAYMENT_URL}/pagamento/qrcode`,
-      {
-        method: 'POST',
-        body: JSON.stringify({ valor: pedido.precoTotal }),
-        headers: { 'Content-Type': 'application/json' },
-      },
-    );
+    const pagamento = await this.paymentUseCasesUseCaseProxy
+      .getInstance()
+      .addPagamento(new Pagamento(pedido));
+
+    // TODO: Arrumar URL
+    const response = await fetch(`http://localhost:3001/pagamento/qrcode`, {
+      method: 'POST',
+      body: JSON.stringify({
+        valor: pedido.precoTotal,
+        pagamentoId: pagamento.id,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    });
 
     const { id, qrcode, valor } = await response.json();
 
@@ -73,7 +80,7 @@ export class PagamentosController {
   @ApiBadRequestResponse({
     description: 'Dados inválidos ou incorretos',
   })
-  @Post('processar')
+  @Put('processar')
   async processar(@Body() pagamentoDto: PagamentoStatusDto): Promise<void> {
     await this.paymentUseCasesUseCaseProxy
       .getInstance()
@@ -92,7 +99,9 @@ export class PagamentosController {
     description: 'Id do pedido não existe!',
   })
   @Get('status/:pedidoId')
-  async status(@Param() pedidoId: number): Promise<PagamentoStatusPresenter> {
+  async status(
+    @Param('pedidoId') pedidoId: number,
+  ): Promise<PagamentoStatusPresenter> {
     const pedido = await this.getPedido(pedidoId);
     const pagamento = await this.paymentUseCasesUseCaseProxy
       .getInstance()

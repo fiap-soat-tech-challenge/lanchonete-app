@@ -4,8 +4,8 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
-  OneToMany, OneToOne,
-  PrimaryGeneratedColumn
+  OneToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ItemPedidoEntity } from './item-pedido.entity';
 import { ClienteEntity } from './cliente.entity';
@@ -18,10 +18,17 @@ export class PedidoEntity {
   @Column()
   codigoPedido: number;
 
-  @ManyToOne(() => ClienteEntity, { nullable: true, onUpdate: 'RESTRICT' })
+  @ManyToOne(() => ClienteEntity, {
+    nullable: true,
+    onUpdate: 'RESTRICT',
+    eager: true,
+  })
   cliente: ClienteEntity;
 
-  @OneToMany(() => ItemPedidoEntity, (item) => item.pedido, { cascade: true })
+  @OneToMany(() => ItemPedidoEntity, (item) => item.pedido, {
+    cascade: true,
+    eager: true,
+  })
   itensPedido: Array<ItemPedidoEntity>;
 
   @Column()

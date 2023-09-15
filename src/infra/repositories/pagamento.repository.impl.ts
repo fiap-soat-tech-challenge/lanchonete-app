@@ -21,7 +21,7 @@ export class PagamentoRepositoryImpl implements PagamentoRepository {
 
   async getPagamentoByPedido(pedido: Pedido): Promise<Pagamento | null> {
     const pagamentoEntity = await this.pagamentoEntityRepository.findOneBy({
-      pedido: pedido,
+      pedido: { id: pedido.id },
     });
     if (pagamentoEntity === null) return null;
     return PagamentoConverter.toPagamento(pagamentoEntity);
@@ -32,6 +32,13 @@ export class PagamentoRepositoryImpl implements PagamentoRepository {
       id: id,
     });
     if (pagamentoEntity === null) return null;
+    return PagamentoConverter.toPagamento(pagamentoEntity);
+  }
+
+  async savePagamento(pagamento: Pagamento): Promise<Pagamento> {
+    const pagamentoToInsert = PagamentoConverter.toEntity(pagamento);
+    const pagamentoEntity =
+      await this.pagamentoEntityRepository.save(pagamentoToInsert);
     return PagamentoConverter.toPagamento(pagamentoEntity);
   }
 }

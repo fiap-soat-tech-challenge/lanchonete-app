@@ -23,4 +23,8 @@ export class PaymentUseCases {
   async getPagamentoById(id: number): Promise<Pagamento> {
     return await this.pagamentoRepository.getPagamentoById(id);
   }
+
+  async addPagamento(pagamento: Pagamento): Promise<Pagamento> {
+    return await this.pagamentoRepository.savePagamento(pagamento);
+  }
 }

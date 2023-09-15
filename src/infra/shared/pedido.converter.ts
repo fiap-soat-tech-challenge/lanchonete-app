@@ -34,11 +34,18 @@ export class PedidoConverter {
       pedido.itensPedido,
     );
 
-    return new PedidoEntity(
+    const pedidoEntity = new PedidoEntity(
       pedido.codigoPedido,
       clienteEntity,
       itensPedidosEntity,
       pedido.precoTotal,
     );
+
+    if (pedido.id && pedido.dataHoraCadastro) {
+      pedidoEntity.id = pedido.id;
+      pedidoEntity.dataHoraCadastro = pedido.dataHoraCadastro;
+    }
+
+    return pedidoEntity;
   }
 }

@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Migrations1693879992691 implements MigrationInterface {
-  name = 'Migrations1693879992691';
+export class Migrations1694737021866 implements MigrationInterface {
+  name = 'Migrations1694737021866';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -21,8 +21,5 @@ export class Migrations1693879992691 implements MigrationInterface {
     );
     await queryRunner.query(`DROP TABLE "pagamentos"`);
     await queryRunner.query(`DROP TYPE "public"."pagamentos_status_enum"`);
-    await queryRunner.query(
-      `ALTER TABLE "pedidos" ADD CONSTRAINT "FK_485346a40b61bb8ae3a98f5400c" FOREIGN KEY ("clienteId") REFERENCES "clientes"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
-    );
   }
 }

@@ -13,7 +13,7 @@ export class ProdutoConverter {
     );
   }
 
-  public static  toProdutoEntity(produto: Produto): ProdutoEntity {
+  public static toProdutoEntity(produto: Produto): ProdutoEntity {
     return new ProdutoEntity(
       produto.nome,
       produto.descricao,
