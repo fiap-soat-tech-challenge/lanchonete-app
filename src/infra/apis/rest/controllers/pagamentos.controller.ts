@@ -26,6 +26,7 @@ import { PagamentoStatusPresenter } from '../presenters/pagamento.status.present
 import { Pedido } from '../../../../domain/model/pedido';
 import { PaymentUseCases } from '../../../../usecases/payment.use.cases';
 import { Pagamento } from '../../../../domain/model/pagamento';
+import { PagamentoService } from '../../../services/pagamento.service';
 
 @ApiTags('Pagamentos')
 @ApiResponse({ status: '5XX', description: 'Erro interno do sistema' })
@@ -36,6 +37,7 @@ export class PagamentosController {
     private pedidoUseCasesUseCaseProxy: UseCaseProxy<PedidoUseCases>,
     @Inject(UseCasesProxyModule.PAGAMENTO_USECASES_PROXY)
     private paymentUseCasesUseCaseProxy: UseCaseProxy<PaymentUseCases>,
+    private pagamentoService: PagamentoService,
   ) {}
   @ApiOperation({
     summary: 'Gera o QR Code de pagamento',
@@ -56,19 +58,7 @@ export class PagamentosController {
       .getInstance()
       .addPagamento(new Pagamento(pedido));
 
-    // TODO: Arrumar URL
-    const response = await fetch(`http://localhost:3001/pagamento/qrcode`, {
-      method: 'POST',
-      body: JSON.stringify({
-        valor: pedido.precoTotal,
-        pagamentoId: pagamento.id,
-      }),
-      headers: { 'Content-Type': 'application/json' },
-    });
-
-    const { id, qrcode, valor } = await response.json();
-
-    return new PagamentoQrcodePresenter(id, qrcode, valor);
+    return this.pagamentoService.generateCode(pagamento);
   }
 
   @ApiOperation({

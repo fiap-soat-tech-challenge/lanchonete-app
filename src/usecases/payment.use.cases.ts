@@ -12,6 +12,7 @@ export class PaymentUseCases {
   ): Promise<void> {
     const pagamento =
       await this.pagamentoRepository.getPagamentoById(pagamentoId);
+    if (pagamento.status === StatusPagamento.APROVADO) return;
     pagamento.status = status;
     await this.pagamentoRepository.updateStatus(pagamento.id, pagamento);
   }

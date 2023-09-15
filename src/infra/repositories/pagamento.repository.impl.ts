@@ -36,6 +36,11 @@ export class PagamentoRepositoryImpl implements PagamentoRepository {
   }
 
   async savePagamento(pagamento: Pagamento): Promise<Pagamento> {
+    const pagamentoByPedido = await this.getPagamentoByPedido(pagamento.pedido);
+    if (pagamentoByPedido) {
+      return pagamentoByPedido;
+    }
+
     const pagamentoToInsert = PagamentoConverter.toEntity(pagamento);
     const pagamentoEntity =
       await this.pagamentoEntityRepository.save(pagamentoToInsert);
