@@ -1,18 +1,5 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Inject,
-  NotFoundException,
-  Post,
-} from '@nestjs/common';
-import {
-  ApiBadRequestResponse,
-  ApiOkResponse,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { Body, Controller, Get, Inject, NotFoundException, Post } from '@nestjs/common';
+import { ApiBadRequestResponse, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PedidoPresenter } from '../presenters/pedido.presenter';
 import { PedidoDto } from '../dtos/pedido.dto';
 import { UseCaseProxy } from '../../../usecases-proxy/use-case-proxy';
@@ -23,7 +10,6 @@ import { Produto } from '../../../../domain/model/produto';
 import { ItemPedido } from '../../../../domain/model/item-pedido';
 import { Pedido } from '../../../../domain/model/pedido';
 import { ClienteUseCases } from '../../../../usecases/cliente.use.cases';
-import { Situacao } from 'src/domain/model/situacao';
 
 @ApiTags('Pedidos')
 @ApiResponse({ status: '5XX', description: 'Erro interno do sistema' })
@@ -48,25 +34,9 @@ export class PedidosController {
   })
   @Get()
   async listar(): Promise<Array<PedidoPresenter>> {
-    const allPedidos = await this.pedidoUseCasesUseCaseProxy
+    const allPedidosSorted = await this.pedidoUseCasesUseCaseProxy
       .getInstance()
-      .getAllPedidos();
-
-    const allPedidosSorted = allPedidos
-      .filter((pedido) => {
-        return pedido.situacao !== 'FINALIZADO';
-      })
-      .sort((a, b) => {
-        const ordemSituacao = [
-          Situacao.PRONTO,
-          Situacao.EM_PREPARACAO,
-          Situacao.RECEBIDO,
-        ];
-
-        return (
-          ordemSituacao.indexOf(a.situacao) - ordemSituacao.indexOf(b.situacao)
-        );
-      });
+      .getAllPedidosSorted();
 
     return allPedidosSorted.map((pedido) => new PedidoPresenter(pedido));
   }
