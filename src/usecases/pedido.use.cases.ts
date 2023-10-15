@@ -1,6 +1,8 @@
 import { PedidoRepository } from '../domain/repositories/pedido.repository';
 import { Pedido } from '../domain/model/pedido';
 import { Situacao } from '../domain/model/situacao';
+import { NotFoundException } from '../domain/exceptions/not-found.exception';
+
 
 export class PedidoUseCases {
   constructor(private readonly pedidoRepository: PedidoRepository) {}
@@ -30,7 +32,13 @@ export class PedidoUseCases {
   }
 
   async getPedidoById(id: number): Promise<Pedido> {
-    return await this.pedidoRepository.findById(id);
+    const pedido = await this.pedidoRepository.findById(id);
+
+    if (pedido === null) {
+      throw new NotFoundException('Id do pedido não existe!');
+    }
+
+    return pedido;
   }
 
   async getNextCodigo(): Promise<number> {
