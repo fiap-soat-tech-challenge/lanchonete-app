@@ -15,8 +15,8 @@ export class PagamentoStatusPresenter {
   @ApiProperty()
   readonly status: StatusPagamento;
 
-  constructor(pagamento: Pagamento) {
-    this.pedidoId = pagamento.id;
+  constructor(pedidoId: number, pagamento: Pagamento) {
+    this.pedidoId = pedidoId;
     this.codigoPedido = pagamento.pedido.codigoPedido;
     this.valorTotal = pagamento.pedido.precoTotal / 100;
     this.status = pagamento.status;

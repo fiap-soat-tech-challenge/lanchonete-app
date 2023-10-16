@@ -72,4 +72,10 @@ export class PedidoUseCases {
     const pedido = new Pedido(nextCodigo, cliente, items);
     return await this.pedidoRepository.insert(pedido);
   }
+
+  async updateStatusPedido(pedidoId: number, situacao: Situacao) {
+    const pedido = await this.getPedidoById(pedidoId);
+    pedido.situacao = situacao;
+    await this.pedidoRepository.update(pedidoId, pedido);
+  }
 }

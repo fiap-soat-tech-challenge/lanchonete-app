@@ -87,7 +87,7 @@ export class PagamentosController {
     const pagamento = await this.paymentUseCasesUseCaseProxy
       .getInstance()
       .getPagamento(pedido);
-    return new PagamentoStatusPresenter(pagamento);
+    return new PagamentoStatusPresenter(pedido.id, pagamento);
   }
 
   private async getPedido(pedidoId: number): Promise<Pedido> {

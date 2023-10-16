@@ -8,7 +8,7 @@ export class Pedido {
   private readonly _cliente: Cliente;
   private readonly _itensPedido: Array<ItemPedido>;
   private _precoTotal: number;
-  private readonly _situacao: Situacao;
+  private _situacao: Situacao;
   private readonly _dataHoraCadastro: Date;
 
   public constructor(
@@ -66,6 +66,10 @@ export class Pedido {
 
   get situacao(): Situacao {
     return this._situacao;
+  }
+
+  set situacao(situacao: Situacao) {
+    this._situacao = situacao;
   }
 
   get dataHoraCadastro(): Date {
