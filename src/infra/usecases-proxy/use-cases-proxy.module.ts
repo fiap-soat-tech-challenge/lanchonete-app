@@ -36,10 +36,18 @@ export class UseCasesProxyModule {
             new UseCaseProxy(new ProdutosUseCases(produtoRepository)),
         },
         {
-          inject: [PedidoRepositoryImpl],
+          inject: [PedidoRepositoryImpl, ClienteRepositoryImpl],
           provide: UseCasesProxyModule.PEDIDO_USECASES_PROXY,
-          useFactory: (pedidoRepository: PedidoRepositoryImpl) =>
-            new UseCaseProxy(new PedidoUseCases(pedidoRepository)),
+          useFactory: (
+            pedidoRepository: PedidoRepositoryImpl,
+            clienteRepository: ClienteRepositoryImpl,
+          ) =>
+            new UseCaseProxy(
+              new PedidoUseCases(
+                pedidoRepository,
+                new ClienteUseCases(clienteRepository),
+              ),
+            ),
         },
         {
           inject: [PagamentoRepositoryImpl],

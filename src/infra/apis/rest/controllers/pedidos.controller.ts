@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, NotFoundException, Post } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PedidoPresenter } from '../presenters/pedido.presenter';
 import { PedidoDto } from '../dtos/pedido.dto';
@@ -8,8 +8,6 @@ import { UseCasesProxyModule } from '../../../usecases-proxy/use-cases-proxy.mod
 import { ProdutosUseCases } from '../../../../usecases/produtos.use.cases';
 import { Produto } from '../../../../domain/model/produto';
 import { ItemPedido } from '../../../../domain/model/item-pedido';
-import { Pedido } from '../../../../domain/model/pedido';
-import { ClienteUseCases } from '../../../../usecases/cliente.use.cases';
 
 @ApiTags('Pedidos')
 @ApiResponse({ status: '5XX', description: 'Erro interno do sistema' })
@@ -20,8 +18,6 @@ export class PedidosController {
     private pedidoUseCasesUseCaseProxy: UseCaseProxy<PedidoUseCases>,
     @Inject(UseCasesProxyModule.PRODUTO_USECASES_PROXY)
     private produtosUseCasesUseCaseProxy: UseCaseProxy<ProdutosUseCases>,
-    @Inject(UseCasesProxyModule.CLIENTE_USECASES_PROXY)
-    private clienteUseCasesUseCaseProxy: UseCaseProxy<ClienteUseCases>,
   ) {}
 
   @ApiOperation({
@@ -54,15 +50,6 @@ export class PedidosController {
   })
   @Post()
   async incluir(@Body() pedidoDto: PedidoDto): Promise<PedidoPresenter> {
-    let cliente = null;
-    if (pedidoDto.clienteInformouCpf()) {
-      cliente = await this.clienteUseCasesUseCaseProxy
-        .getInstance()
-        .getClienteByCpf(pedidoDto.clienteCpf);
-      if (cliente === null)
-        throw new NotFoundException('Cliente não encontrado');
-    }
-
     const items = await Promise.all(
       pedidoDto.itensPedido.map(async (item) => {
         const produto: Produto = await this.produtosUseCasesUseCaseProxy
@@ -72,13 +59,9 @@ export class PedidosController {
       }),
     );
 
-    const nextCodigo = await this.pedidoUseCasesUseCaseProxy
-      .getInstance()
-      .getNextCodigo();
-
     const pedido = await this.pedidoUseCasesUseCaseProxy
       .getInstance()
-      .addPedido(new Pedido(nextCodigo, cliente, items));
+      .addPedido(pedidoDto.clienteCpf, items);
 
     return new PedidoPresenter(pedido);
   }
