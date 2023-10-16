@@ -1,20 +1,11 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Inject,
-  NotFoundException,
-  Param,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Post, Put } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiResponse,
-  ApiTags,
+  ApiTags
 } from '@nestjs/swagger';
 import { PagamentoStatusDto } from '../dtos/pagamento.status.dto';
 import { PagamentoQrcodeDto } from '../dtos/pagamento.qrcode.dto';
@@ -96,17 +87,12 @@ export class PagamentosController {
     const pagamento = await this.paymentUseCasesUseCaseProxy
       .getInstance()
       .getPagamento(pedido);
-    return new PagamentoStatusPresenter(pagamento);
+    return new PagamentoStatusPresenter(pedido.id, pagamento);
   }
 
   private async getPedido(pedidoId: number): Promise<Pedido> {
-    const pedido = await this.pedidoUseCasesUseCaseProxy
+    return await this.pedidoUseCasesUseCaseProxy
       .getInstance()
       .getPedidoById(pedidoId);
-
-    if (pedido === null)
-      throw new NotFoundException('Id do pedido não existe!');
-
-    return pedido;
   }
 }

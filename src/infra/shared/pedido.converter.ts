@@ -39,6 +39,7 @@ export class PedidoConverter {
       clienteEntity,
       itensPedidosEntity,
       pedido.precoTotal,
+      pedido.situacao,
     );
 
     if (pedido.id && pedido.dataHoraCadastro) {

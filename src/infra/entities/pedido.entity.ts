@@ -49,10 +49,12 @@ export class PedidoEntity {
     cliente: ClienteEntity,
     itensPedido: Array<ItemPedidoEntity>,
     precoTotal: number,
+    situacao: Situacao,
   ) {
     this.codigoPedido = codigoPedido;
     this.cliente = cliente;
     this.itensPedido = itensPedido;
     this.precoTotal = precoTotal;
+    this.situacao = situacao;
   }
 }

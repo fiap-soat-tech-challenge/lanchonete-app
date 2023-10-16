@@ -4,7 +4,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PedidoEntity } from '../entities/pedido.entity';
 import { Repository } from 'typeorm';
 import { PedidoConverter } from '../shared/pedido.converter';
-import { raw } from 'express';
 
 export class PedidoRepositoryImpl implements PedidoRepository {
   constructor(
@@ -36,5 +35,13 @@ export class PedidoRepositoryImpl implements PedidoRepository {
     const pedidoEntityToInsert = PedidoConverter.toEntity(pedido);
     const pedidoEntity = await this.pedidoRepository.save(pedidoEntityToInsert);
     return PedidoConverter.toPedido(pedidoEntity);
+  }
+
+  async update(produtoId: number, pedido: Pedido): Promise<void> {
+    /*
+    Usando save para contornar um bug do TypeORM ainda não corrigido
+    https://github.com/typeorm/typeorm/issues/8404
+     */
+    await this.pedidoRepository.save(PedidoConverter.toEntity(pedido));
   }
 }

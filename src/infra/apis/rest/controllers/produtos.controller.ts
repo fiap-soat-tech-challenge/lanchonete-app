@@ -85,9 +85,7 @@ export class ProdutosController {
     summary: 'Altera um produto existente',
     description: 'Altera um produto já cadastrado no sistema',
   })
-  @ApiOkResponse({
-    type: ProdutoPresenter,
-  })
+  @ApiOkResponse()
   @ApiBadRequestResponse({
     description: 'Dados inválidos ou incorretos',
   })

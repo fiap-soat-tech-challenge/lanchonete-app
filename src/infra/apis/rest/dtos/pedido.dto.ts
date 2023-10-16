@@ -13,12 +13,4 @@ export class PedidoDto {
   @ApiProperty({ isArray: true, type: ItemPedidoDto })
   @ArrayNotEmpty({ message: 'Lista de Itens do pedido inválida!' })
   itensPedido: Array<ItemPedidoDto>;
-
-  public clienteInformouCpf() {
-    return (
-      this.clienteCpf !== '' &&
-      this.clienteCpf !== null &&
-      this.clienteCpf !== undefined
-    );
-  }
 }
