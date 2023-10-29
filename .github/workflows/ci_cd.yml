@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    name: "Plan"
+    name: "Continuous integration"
     runs-on: ubuntu-latest
 
     steps:
