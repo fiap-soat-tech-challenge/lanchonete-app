@@ -21,6 +21,7 @@ describe('CategoriasController', () => {
         new CategoriaPresenter('ACOMPANHAMENTO'),
         new CategoriaPresenter('BEBIDA'),
         new CategoriaPresenter('SOBREMESA'),
+        new CategoriaPresenter('COMIDA'),
       ];
 
       jest
