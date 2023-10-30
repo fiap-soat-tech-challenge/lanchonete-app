@@ -24,11 +24,7 @@ describe('CategoriasController', () => {
         new CategoriaPresenter('COMIDA'),
       ];
 
-      jest
-        .spyOn(categoriasController, 'listar')
-        .mockImplementation(() => result);
-
-      expect(categoriasController.listar()).toBe(result);
+      expect(categoriasController.listar()).toEqual(result);
     });
   });
 });
