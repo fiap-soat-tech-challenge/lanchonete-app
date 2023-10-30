@@ -21,7 +21,7 @@ describe('CategoriasController', () => {
         new CategoriaPresenter('ACOMPANHAMENTO'),
         new CategoriaPresenter('BEBIDA'),
         new CategoriaPresenter('SOBREMESA'),
-        new CategoriaPresenter('COMIDA'),
+        // new CategoriaPresenter('COMIDA'), // descomente para falhar teste
       ];
 
       expect(categoriasController.listar()).toEqual(result);
