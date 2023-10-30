@@ -33,8 +33,8 @@ jobs:
     name: "Continuous Delivery"
     runs-on: ubuntu-latest
     needs: build
-    if: github.ref == 'refs/heads/adicionando_ci_cd'
+#    if: github.ref == 'refs/heads/adicionando_ci_cd'
 
     steps:
       - name: Deploy app
-        run: exit 0
+        run: echo "teste" && exit 0
