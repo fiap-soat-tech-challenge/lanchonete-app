@@ -8,6 +8,9 @@ on:
 
 env:
   ECR_REPOSITORY: "lanchonete-app"
+  ECS_CLUSTER: "lanchonete-app"
+  ECS_SERVICE: "service-app"
+  ECS_TASK: "task-app"
 
 jobs:
   build-and-tests:
@@ -58,7 +61,9 @@ jobs:
           REPOSITORY: ${{ env.ECR_REPOSITORY }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+          docker build -t $REGISTRY/$REPOSITORY .
+          docker push $REGISTRY/$REPOSITORY
+          docker tag $REGISTRY/$REPOSITORY $REGISTRY/$REPOSITORY:$IMAGE_TAG
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
   deploy:
@@ -67,5 +72,13 @@ jobs:
     needs: create-docker-image
     if: github.ref == 'refs/heads/main'
     steps:
-      - name: Deploy app
-        run: echo "deploy" && exit 0
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name: Update ECS service
+        run: |
+          aws ecs update-service --cluster $ECS_CLUSTER --service $ECS_SERVICE --task-definition $ECS_TASK --force-new-deployment
