@@ -22,6 +22,9 @@ export const getTypeOrmModuleOptions = (
     cli: {
       migrationsDir: 'src/data/migrations',
     },
+    extra: {
+      ssl: true,
+    },
     // ssl: {
     //   rejectUnauthorized: false,
     // },
