@@ -1,20 +1,14 @@
-name: Lanchonete App CI/CD
+name: Create Docker Image
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
+  workflow_dispatch:
 
 env:
   ECR_REPOSITORY: "lanchonete-app"
-  ECS_CLUSTER: "lanchonete-app"
-  ECS_SERVICE: "service-app"
-  ECS_TASK: "task-app"
 
 jobs:
   build-and-tests:
-    name: "Continuous integration"
+    name: "Build and tests"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -39,7 +33,6 @@ jobs:
     name: "Build Docker image"
     runs-on: ubuntu-latest
     needs: build-and-tests
-    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -63,20 +56,3 @@ jobs:
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG -t $REGISTRY/$REPOSITORY:latest .
           docker push --all-tags $REGISTRY/$REPOSITORY
-
-  deploy:
-    name: "Continuous Delivery"
-    runs-on: ubuntu-latest
-    needs: create-docker-image
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-2
-
-      - name: Update ECS service
-        run: |
-          aws ecs update-service --cluster $ECS_CLUSTER --service $ECS_SERVICE --task-definition $ECS_TASK --force-new-deployment
