@@ -8,7 +8,6 @@ export const getTypeOrmModuleOptions = (
 ): TypeOrmModuleOptions =>
   ({
     type: 'postgres',
-    useUTC: false,
     host: envie.getDatabaseHost(),
     port: envie.getDatabasePort(),
     username: envie.getDatabaseUser(),
