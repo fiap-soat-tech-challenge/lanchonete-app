@@ -18,9 +18,6 @@ export class HealthController {
   @Get()
   @HealthCheck()
   check() {
-    return this.health.check([
-      () => this.db.pingCheck('database'),
-      () => this.http.pingCheck('gateway-pagamento', process.env.PAYMENT_URL),
-    ]);
+    return this.health.check([() => this.db.pingCheck('database')]);
   }
 }
