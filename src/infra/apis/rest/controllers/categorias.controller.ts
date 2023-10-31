@@ -12,6 +12,7 @@ import { Categoria } from '../../../../domain/model/categoria';
 @ApiResponse({ status: '5XX', description: 'Erro interno do sistema' })
 @Controller('/api/categorias')
 export class CategoriasController {
+  // Test comment
   @ApiOperation({
     summary: 'Lista todas as categorias',
     description: 'Retorna uma lista de todas as categorias',
