@@ -7,10 +7,9 @@ on:
   pull_request:
 
 jobs:
-  build:
+  build-and-tests:
     name: "Continuous integration"
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,12 +29,20 @@ jobs:
       - name: Run tests
         run: npm test
 
+  create-docker-image:
+    name: "Build Docker image"
+    runs-on: ubuntu-latest
+    needs: build-and-tests
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Build docker
+        run: echo "build docker" && exit 0
+
   deploy:
     name: "Continuous Delivery"
     runs-on: ubuntu-latest
-    needs: build
+    needs: create-docker-image
     if: github.ref == 'refs/heads/main'
-
     steps:
       - name: Deploy app
-        run: echo "teste" && exit 0
+        run: echo "deploy" && exit 0
