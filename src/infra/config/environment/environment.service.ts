@@ -33,4 +33,8 @@ export class EnvironmentService implements DatabaseConfig {
   getDatabaseSync(): boolean {
     return this.configService.get<boolean>('DB_SYNCHRONIZE');
   }
+
+  getUseSslDatabase(): boolean {
+    return this.configService.get<boolean>('DB_SSL');
+  }
 }

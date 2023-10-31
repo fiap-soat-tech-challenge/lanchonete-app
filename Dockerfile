@@ -15,7 +15,7 @@ RUN npm ci --only=production && npm cache clean --force
 USER node
 
 FROM node:18.17-alpine AS production
-RUN apk update && apk add --no-cache dumb-init
+RUN apk update && apk add --no-cache dumb-init curl
 ENV NODE_ENV production
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist

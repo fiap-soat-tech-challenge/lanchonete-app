@@ -56,11 +56,11 @@ services:
       database:
         condition: service_healthy #inicia o container do app só quando o postgres disser que está healthy
     healthcheck:
-      test: wget --no-verbose --tries=1 --spider localhost:8081/actuator/health || exit 1
+      test: ["CMD-SHELL", "curl http://localhost:3000/health || exit 1"]
       interval: 10s
       timeout: 5s
-      retries: 5
-      start_period: 15s
+      retries: 3
+      start_period: 5s
     networks:
       - lanchonete_network
     profiles:

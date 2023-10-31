@@ -22,7 +22,7 @@ export const getTypeOrmModuleOptions = (
     cli: {
       migrationsDir: 'src/data/migrations',
     },
-    ssl: true,
+    ssl: envie.getUseSslDatabase(),
     extra: {
       ssl: {
         rejectUnauthorized: false,
