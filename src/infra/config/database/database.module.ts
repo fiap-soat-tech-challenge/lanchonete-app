@@ -15,8 +15,8 @@ export const getTypeOrmModuleOptions = (
     password: envie.getDatabasePassword(),
     database: envie.getDatabaseName(),
     entities: [__dirname + './../../**/*.entity{.ts,.js}'],
-    synchronize: false,
-    schema: process.env.DATABASE_SCHEMA,
+    synchronize: envie.getDatabaseSync(),
+    schema: envie.getDatabaseSchema(),
     migrationsRun: false,
     migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
     cli: {
