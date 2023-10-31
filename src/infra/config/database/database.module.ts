@@ -14,10 +14,10 @@ export const getTypeOrmModuleOptions = (
     username: envie.getDatabaseUser(),
     password: envie.getDatabasePassword(),
     database: envie.getDatabaseName(),
-    entities: [__dirname + './../../**/*.entity{.ts,.js}'],
-    synchronize: envie.getDatabaseSync(),
     schema: envie.getDatabaseSchema(),
-    migrationsRun: false,
+    synchronize: envie.getDatabaseSync(),
+    entities: [__dirname + './../../**/*.entity{.ts,.js}'],
+    migrationsRun: true,
     migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
     cli: {
       migrationsDir: 'src/data/migrations',
