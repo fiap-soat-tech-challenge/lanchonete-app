@@ -4,7 +4,8 @@ dotenv.config();
 
 export const mudarStatusDePagamento = async (pagamentoId) => {
   const response = await fetch(
-    `http://${process.env.LACHONETE_HOST}:${process.env.LACHONETE_PORT}/api/pagamentos/processar`, {
+    `http://${process.env.LACHONETE_HOST}:${process.env.LACHONETE_PORT}/api/pagamentos/processar`,
+    {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -14,9 +15,13 @@ export const mudarStatusDePagamento = async (pagamentoId) => {
     },
   );
 
-  console.log(`[${new Date().toLocaleString('pt-BR')}] Status code ${response.status} - ${response.statusText}`);
+  console.log(
+    `[${new Date().toLocaleString('pt-BR')}] Status code ${response.status} - ${
+      response.statusText
+    }`,
+  );
   if (response.status !== 200) {
-      const data = await response.json();
-      console.log(data);
+    const data = await response.json();
+    console.log(data);
   }
 };

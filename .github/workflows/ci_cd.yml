@@ -8,7 +8,7 @@ on:
 
 env:
   ECR_REPOSITORY: "lanchonete-app"
-  ECS_CLUSTER: "lanchonete-app"
+  ECS_CLUSTER: "lanchonete-cluster"
   ECS_SERVICE: "app-service"
   ECS_TASK: "app-task"
 
@@ -79,4 +79,4 @@ jobs:
 
       - name: Update ECS service
         run: |
-          aws ecs update-service --cluster $ECS_CLUSTER --service $ECS_SERVICE --task-definition $ECS_TASK --enable-execute-command --force-new-deployment
+          aws ecs update-service --cluster $ECS_CLUSTER --service $ECS_SERVICE --task-definition $ECS_TASK --force-new-deployment
