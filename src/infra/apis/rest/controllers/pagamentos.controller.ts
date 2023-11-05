@@ -1,11 +1,20 @@
-import { Body, Controller, Get, Inject, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiResponse,
-  ApiTags
+  ApiTags,
 } from '@nestjs/swagger';
 import { PagamentoStatusDto } from '../dtos/pagamento.status.dto';
 import { PagamentoQrcodeDto } from '../dtos/pagamento.qrcode.dto';
@@ -21,6 +30,7 @@ import { PagamentoService } from '../../../services/pagamento.service';
 
 @ApiTags('Pagamentos')
 @ApiResponse({ status: '5XX', description: 'Erro interno do sistema' })
+@ApiBearerAuth()
 @Controller('/api/pagamentos')
 export class PagamentosController {
   constructor(

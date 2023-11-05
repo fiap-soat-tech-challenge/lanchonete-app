@@ -1,6 +1,16 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post, Put, } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -17,6 +27,7 @@ import { Categoria } from '../../../../domain/model/categoria';
 
 @ApiTags('Produtos')
 @ApiResponse({ status: '5XX', description: 'Erro interno do sistema' })
+@ApiBearerAuth()
 @Controller('/api/produtos')
 export class ProdutosController {
   constructor(

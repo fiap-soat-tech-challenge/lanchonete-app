@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -16,6 +17,7 @@ import { ClienteUseCases } from '../../../../usecases/cliente.use.cases';
 
 @ApiTags('Clientes')
 @ApiResponse({ status: '5XX', description: 'Erro interno do sistema' })
+@ApiBearerAuth()
 @Controller('/api/clientes')
 export class ClientesController {
   constructor(
