@@ -33,6 +33,7 @@
       </ul>
     </li>
     <li><a href="#exemplos-de-uso">Exemplos de uso</a></li>
+    <li><a href="#banco-de-dados">Banco de dados</a></li>
     <li><a href="#roteiro">Roteiro</a></li>
   </ol>
 </details>
@@ -119,6 +120,22 @@ A resposta deve seguir o seguinte formato:
 ```
 
 <p align="right">(<a href="#readme-top">Voltar para o topo</a>)</p>
+
+## Banco de dados
+
+Para o projeto utilizamos o banco de dados PostgreSQL que suporta uma variedade de tipos de dados diferentes, possui 
+uma licença de código aberto, ou seja, podendo ser utilizado por diversas aplicações de forma gratuita. Utiliza a 
+linguagem SQL, tornando mais fácil a migração para outros bancos de dados relacionais, caso surja a necessidade. 
+Também da suporte a transações ACID e pode lidar com grandes volumes de dados.
+
+O PostgreSQL se tornou muito popular pela sua fácil utilização, sendo assim uma ótima opção para se trabalhar em 
+equipes e aplicações de pequeno porte,  facilitando o entendimento e manutenção do projeto entre integrantes da 
+equipe. Por conseguir lidar com grandes quantidades de dados, o PostgreSQL ė uma ótima opção ao se trabalhar com 
+análise de dados, e também possui a capacidade de expandir de acordo com o crescimento da aplicação, já que 
+inicialmente ela será de pequeno porte.
+
+Por fim, conseguimos gerenciar e monitorar o nosso banco de dados utilizando recursos disponibilizados no próprio 
+PostgreSQL, garantindo o desempenho e segurança dos nossos dados.
 
 <!-- KUBERNETES -->
 ## Kubernetes
