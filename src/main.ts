@@ -16,6 +16,7 @@ async function bootstrap() {
     .setTitle('Projeto Lanchonete')
     .setDescription('Esta API expõe endpoints para gerenciar uma lanchonete.')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

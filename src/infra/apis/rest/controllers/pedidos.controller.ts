@@ -1,5 +1,20 @@
-import { Body, Controller, Get, Inject, Param, Post, Put } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { PedidoPresenter } from '../presenters/pedido.presenter';
 import { PedidoDto } from '../dtos/pedido.dto';
 import { UseCaseProxy } from '../../../usecases-proxy/use-case-proxy';
@@ -8,11 +23,11 @@ import { UseCasesProxyModule } from '../../../usecases-proxy/use-cases-proxy.mod
 import { ProdutosUseCases } from '../../../../usecases/produtos.use.cases';
 import { Produto } from '../../../../domain/model/produto';
 import { ItemPedido } from '../../../../domain/model/item-pedido';
-import { Situacao } from '../../../../domain/model/situacao';
 import { PedidoStatusDto } from '../dtos/pedido.status.dto';
 
 @ApiTags('Pedidos')
 @ApiResponse({ status: '5XX', description: 'Erro interno do sistema' })
+@ApiBearerAuth()
 @Controller('/api/pedidos')
 export class PedidosController {
   constructor(
