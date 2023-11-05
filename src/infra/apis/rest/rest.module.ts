@@ -9,12 +9,14 @@ import { UniqueCpfValidation } from './validations/unique.cpf.validation';
 import { UniqueEmailValidation } from './validations/unique.email.validation';
 import { PagamentosController } from './controllers/pagamentos.controller';
 import { PagamentoService } from '../../services/pagamento.service';
+import { LoginController } from './controllers/login.controller';
 
 @Module({
   imports: [UseCasesProxyModule.register()],
   providers: [UniqueCpfValidation, UniqueEmailValidation, PagamentoService],
   controllers: [
     HomeController,
+    LoginController,
     CategoriasController,
     ClientesController,
     ProdutosController,
