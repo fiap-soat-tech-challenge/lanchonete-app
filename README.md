@@ -137,6 +137,10 @@ inicialmente ela será de pequeno porte.
 Por fim, conseguimos gerenciar e monitorar o nosso banco de dados utilizando recursos disponibilizados no próprio 
 PostgreSQL, garantindo o desempenho e segurança dos nossos dados.
 
+Nossa modelagem de banco de dados é a seguinte:
+
+![Modelo banco de dados](docs/imagens/modelo_banco_de_dados.jpeg)
+
 <!-- KUBERNETES -->
 ## Kubernetes
 
